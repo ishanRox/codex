@@ -1,6 +1,6 @@
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Random;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -8,9 +8,41 @@ import java.util.stream.Stream;
 class StreamShortNote {
 
   public static void main(String ishan[]) {
+    System.out.println("Ways to create Streams___________________");
 
-    System.out.println("Ways to create Streams");
-    
+    // 1. Using Collections .stream
+    List<String> list = new ArrayList<>();
+    list.add("Ishan");
+    list.add("Vimukthi");
+    list.add("Vihanga");
+    list.add("Kandage");
+    list.add("Don");
+    list.stream().forEach(System.out::println);
+    System.out.println();
+
+    // 2. Use Streams.of
+    Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).forEach(System.out::println);
+    System.out.println();
+
+    // 3. Use Arrays.stream on array
+    Arrays.stream(new int[]{1, 2, 3, 4, 5, 6}).forEach(System.out::println);
+    System.out.println();
+
+    // 4. Use Stream.of on array
+    Stream.of(new int[]{10, 100, 1000, 10000}).flatMapToInt(Arrays::stream).forEach(System.out::println);
+
+    System.out.println();
+    //Use infinite Stream and limit it
+    int initialValue = 2;
+    int limitTerms = 10;
+    Stream.iterate(initialValue, (Integer n) -> n + 1)
+            .limit(limitTerms)
+            .forEach(System.out::println);
+
+    //Create Random Stream , Create infinite stream ,using Stream.generate() method
+    Stream.generate(Math::random)
+            .limit(limitTerms)
+            .forEach(System.out::println);
     System.out.println("_________________________________________________________________");
 
     System.out.println("Most common methos in java 8  Streams");
@@ -75,7 +107,6 @@ class StreamShortNote {
     //Sorting methods Stream
     //numbers
     int[] i = new Random().ints(10, 0, 10).toArray();
-
     Arrays.stream(i).forEach(i1 -> System.out.println(i1));
     System.out.println();
     Arrays.stream(i).sorted().forEach(System.out::println);
@@ -87,7 +118,7 @@ class StreamShortNote {
 
     //Custom class sort using comparator
     Stream.of(new Student(99, "ishan"), new Student(88, "ishan"), new Student(77, "ishan"), new Student(66, "ishan"))
-            .sorted((stu1,stu2)->stu1.score-stu2.score)
+            .sorted((stu1, stu2) -> stu1.score - stu2.score)
             .forEach(System.out::println);
   }
 }
