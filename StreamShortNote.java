@@ -1,4 +1,4 @@
-import java.math.BigDecimal;
+﻿import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,7 +29,10 @@ class StreamShortNote {
     System.out.println();
 
     // 4. Use Stream.of on array
+    // meka dammoth awula enne na int nisa enne   Stream.of(new Integer[]{1,4,5,6,}).forEach(System.out::println);
     Stream.of(new int[]{10, 100, 1000, 10000}).flatMapToInt(Arrays::stream).forEach(System.out::println);
+    Stream.of(new String[]{"this ","Using ","Stream.Of() "}).forEach(System.out::print);
+    Stream.of(new char[]{'a','s','9'}).forEach(System.out::println);
 
     System.out.println();
     //Use infinite Stream and limit it
@@ -107,7 +110,7 @@ class StreamShortNote {
     //Sorting methods Stream
     //numbers
     int[] i = new Random().ints(10, 0, 10).toArray();
-    Arrays.stream(i).forEach(i1 -> System.out.println(i1));
+    Arrays.stream(i).forEach(i1 -> System.out.println(i1))    ;
     System.out.println();
     Arrays.stream(i).sorted().forEach(System.out::println);
     System.out.println();
