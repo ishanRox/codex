@@ -72,20 +72,21 @@ public class R1 {
     System.out.println("Destination: " + flight1.group("destination"));
     System.out.println("Departure date: " + flight1.group("deptDate"));
 
-    String command = "connect 10.0.63.12;8082 as krish";
-    Pattern regex1 = Pattern.compile("\\w+" + " "
-            + "(?<airline>..) "
-            + "(?<origin>...)\\." + "(?<number>\\d+)\\." + "(?<destination>...)"
-            + "\\[(?<deptDate>\\d+-\\d+-\\d+)\\]");
+    String command = "connect 12.23.3.43:1234 as ishan";
+    Pattern regex1 = Pattern.compile("^connect " +
+            "(?<ip>((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))" +
+            ":(?<port>\\d{4})" +
+            " as " +
+            "(?<name>\\w*)$");
     Matcher matches = regex1.matcher(command);
-    matches.find();
-    System.out.println("Airline: " + matches.group("airline"));
-    System.out.println("Origin: " + matches.group("origin"));
-    System.out.println("Number: " + matches.group("number"));
-    System.out.println("Destination: " + matches.group("destination"));
-    System.out.println("Departure date: " + matches.group("deptDate"));
 
-
+    if (matches.find()){
+      System.out.println("ip: " + matches.group("ip"));
+      System.out.println("name: " + matches.group("name"));
+      System.out.println("port: " + matches.group("port"));
+    }else{
+      System.out.println("Wronge Command !");
+    }
 
   }
 }
