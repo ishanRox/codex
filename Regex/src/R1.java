@@ -72,5 +72,20 @@ public class R1 {
     System.out.println("Destination: " + flight1.group("destination"));
     System.out.println("Departure date: " + flight1.group("deptDate"));
 
+    String command = "connect 10.0.63.12;8082 as krish";
+    Pattern regex1 = Pattern.compile("\\w+" + " "
+            + "(?<airline>..) "
+            + "(?<origin>...)\\." + "(?<number>\\d+)\\." + "(?<destination>...)"
+            + "\\[(?<deptDate>\\d+-\\d+-\\d+)\\]");
+    Matcher matches = regex1.matcher(command);
+    matches.find();
+    System.out.println("Airline: " + matches.group("airline"));
+    System.out.println("Origin: " + matches.group("origin"));
+    System.out.println("Number: " + matches.group("number"));
+    System.out.println("Destination: " + matches.group("destination"));
+    System.out.println("Departure date: " + matches.group("deptDate"));
+
+
+
   }
 }
