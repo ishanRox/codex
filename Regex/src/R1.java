@@ -80,13 +80,19 @@ public class R1 {
             "(?<name>\\w*)$");
     Matcher matches = regex1.matcher(command);
 
-    if (matches.find()){
+    if (matches.find()) {
       System.out.println("ip: " + matches.group("ip"));
       System.out.println("name: " + matches.group("name"));
       System.out.println("port: " + matches.group("port"));
-    }else{
+    } else {
       System.out.println("Wronge Command !");
     }
 
+
+    Matcher matcher2 = Pattern.compile("send (?<msg>.*)->(?<name>.*)").matcher("send hello->ishan");
+    if (matcher2.find()) {
+      System.out.println("message: " + matcher2.group("msg"));
+      System.out.println("name: " + matcher2.group("name"));
+    }
   }
 }
