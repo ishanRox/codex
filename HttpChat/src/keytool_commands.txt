@@ -1,0 +1,11 @@
+1 - First Generate the server Certificate and public/private key and store it in keystore file
+
+keytool -genkey -keyalg RSA -keysize 2048 -validity 360 -alias mykey1 -keystore myKeyStore.jks
+
+2 - Export the certficate and the public key that should be send to the client.
+
+keytool -export -alias mykey1 -keystore myKeyStore.jks -file mykey1.cert
+
+3 - Add the key at the client side to a TrustedStore to trust the server
+
+keytool -import -file mykey1.cert -alias mykey1 -keystore myTrustStore.jts
