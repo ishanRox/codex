@@ -1,0 +1,15 @@
+public static <T,T1> void checkList(List<T1> myList, T obj){
+    if(myList.contains(obj)){
+      System.out.println("The list contains the element: " + obj);
+    } else {
+      System.out.println("The list does not contain the element: " + obj);
+    }
+  }
+//We
+  public static <T> void checkListWild(List<?> myList, T obj){
+    if(myList.contains(obj)){
+      System.out.println("The list contains the element: " + obj);
+    } else {
+      System.out.println("The list does not contain the element: " + obj);
+    }
+  }

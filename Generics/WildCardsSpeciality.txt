@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class  GenericTest<X> {
+  X x;
+
+  public X getX() {
+    return x;
+  }
+
+  public static <T> void getAny(T t) {
+    System.out.println(t);
+  }
+
+  public static <T>void getAnTypeAnyAmount(T  ...a){
+    Arrays.stream(a).forEach(System.out::println);
+  }
+
+  //B and sub types
+  public static <T extends B> void getB(T t) {
+    System.out.println(t);
+  }
+
+  //Number and super types can only be used in wildcard
+  //for ? to be happen you must have thing that takes generic types
+  //So my generic test class can have any type define by X but im specifing it must be B or super
+  //We use wildCard when we dont know the type parameter of a generic var or a class
+  public static  void getNUmberSuper(GenericTest<? super B> t) {
+    System.out.println(t);
+  }
+
+
+  public static void main(String[] args) {
+    getAny(12);
+    getAny("ishan");
+
+    // cant getB(new A());
+    getB(new B());
+    getB(new C());
+    getAnTypeAnyAmount("ishan",123,12.212);
+
+    //cant do T here  ArrayList<T> ts= new ArrayList<T>();
+    // ArrayList<?> ts= new ArrayList<T>();
+
+    //this cant be applied because its not B or super
+    GenericTest <C>genericTest= new GenericTest<>();
+    GenericTest <B>genericTest1= new GenericTest<>();
+
+    getNUmberSuper(genericTest1);
+  }
+}
+
+class A {
+  @Override
+  public String toString() {
+    return "is A"+this.getClass();
+  }
+}
+
+//branch of A
+class B extends A {
+}
+
+class C extends B {
+}
+
+//Another Branch of A
+class D extends A {
+}
+
+class E extends D {
+}

@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+class GenericTest {
+
+  public static <T> void getAny(T t) {
+    System.out.println(t);
+  }
+
+  //B and sub types
+  public static <T extends B> void getB(T t) {
+    System.out.println(t);
+  }
+
+  public static <T>void getAnTypeAnyAmount(T  ...a){
+    Arrays.stream(a).forEach(System.out::println);
+  }
+
+  public static void main(String[] args) {
+    getAny(12);
+    getAny("ishan");
+    // cant getB(new A());
+    getB(new B());
+    getB(new C());
+    getAnTypeAnyAmount("ishan",123,12.212);
+
+    //cant do T here  ArrayList<T> ts= new ArrayList<T>();
+    // ArrayList<?> ts= new ArrayList<T>();
+  }
+}
+
+class A {
+  @Override
+  public String toString() {
+    return "is A"+this.getClass();
+  }
+}
+
+//branch of A
+class B extends A {
+}
+
+class C extends B {
+}
+
+//Another Branch of A
+class D extends A {
+}
+
+class E extends D {
+}

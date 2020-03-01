@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Test{
+public static void addOther(List list){
+  list.add(123);
+
+}
+
+  public static void main(String[] args) {
+    //Vegetarian only inside home outside barbarian
+
+    ArrayList<String> strings= new ArrayList<String>();
+    strings.add("Only");
+    strings.add("In");
+    strings.add("Defined");
+    strings.add("Scope");
+    //strings.add(1234); Can't add because it takes only <String>
+    System.out.println(strings);
+    addOther(strings);
+    System.out.println(strings);
+  }
+}
