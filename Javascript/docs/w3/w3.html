@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      
+      .chat-box{
+        border-style: solid;
+        border-color
+      }
+      .bi {
+        color: blue;
+        font-style: italic;
+        font-weight: bolder;
+      }
+      .ci {
+        color: black;
+        border: maroon;
+        border-style: dotted;
+        font-weight: bolder;
+      }
+
+      #container {
+        position: relative;
+        background-color: black;
+        width: 400px;
+        height: 400px;
+      }
+      #box {
+        /*
+        The positioning is done relative to the 
+        first relatively
+         (or absolutely) 
+         positioned parent element. 
+        */
+        position: absolute;
+        background-color: yellow;
+        width: 50px;
+        height: 50px;
+      }
+    </style>
+
+
+
+  </head>
+  <body>
+    <h1 id="date">now data</h1>
+
+    <!-- #region 
+    
+       inline arrow method 
+    -->
+    <button
+      onclick='(
+          (e) => {
+        alert("inline not good");
+        prompt("use addEventListener ")
+        })()'
+    >
+      inline onclick button easy not recomended
+    </button>
+
+
+    <select name="" id="">
+<option value="">a</option>
+<option value="">b</option>
+<option value="">c</option>
+
+    </select>
+
+    <div class="chat-box"></div>
+    <script>
+      //javascript date
+
+      /* 
+      .. JavaScript counts months from 0 to 11.
+January is 0. December is 11. */
+
+      let date = new Date();
+      document.getElementById("date").innerHTML = date.toDateString();
+
+      //this keyword javascript weird
+
+      /*    
+   In a method, this refers to the owner object.
+    Alone, this refers to the global object.
+    In a function, this refers to the global object.
+    In a function, in strict mode, this is undefined.
+    In an event, this refers to the element that received the event.
+    Methods like call(), and apply() can refer this to any object.
+ */
+
+      //math random
+      console.log(Math.random() * 100);
+      console.log(Math.floor(Math.random() * 100));
+    </script>
+
+    <!-- #region 
+    regex javascript
+    -->
+    <script>
+
+
+
+
+
+      let regex = /[nh]ishan/gi;
+
+      let string = "ishan nishan hishan kishan rishan pishan";
+
+      //exec eka only 1 return
+      console.log("regex " + regex.exec(string));
+
+      //test return true or false
+      console.log("regex " + regex.test(string));
+
+      //match eka okkoma return global dammanam
+      console.log("regex " + string.match(regex));
+    </script>
+
+    <!-- #region 
+    
+    DOM manipulation
+    -->
+    <h1 id="h1id" onclick="changeH1()">dom manipulation by javascript</h1>
+    <h2>another h2</h2>
+    <h3>another h3</h3>
+    <h4 class="bi">This h4 has a class name bold and italic</h4>
+    <button onclick="changeH4();">
+      toggle change h4 which has bi class
+    </button>
+
+    <h4 class="ci" onclick="certain();">
+      change only html element with certain class
+    </h4>
+
+    <div style="border-style:groove">
+      <form id="form123" action="">
+        <input value="name" type="text" />
+        <input type="text" value="age" />
+        <input type="text" value="tp" />
+      </form>
+      <button onclick="form123();" type="submit">submit</button>
+    </div>
+
+    <img id="img" src="smiley.gif" alt="" width="160" height="120" />
+
+    <button
+      onclick="document.getElementsByTagName('body')[0].style.backgroundColor='cyan'"
+    >
+      change background
+    </button>
+
+    <h3>javascript animations</h3>
+    <div id="container">
+      <div id="box" onclick="ani()"></div>
+    </div>
+
+    <h5 id="click1">on click Listner 1</h5>
+
+    <div
+      id="outer"
+      style="  background-color:black; width: 200px; height: 200px;"
+    >
+      <div
+        id="inner"
+        style="position: absolute; margin: 75px;; background-color:blue; width: 50px; height: 50px"
+      ></div>
+    </div>
+
+    <div
+      id="outer1"
+      style="  background-color:blue; width: 200px; height: 200px;"
+    >
+      <div
+        id="inner1"
+        style="position: absolute; margin: 75px;; background-color:powderblue; width: 50px; height: 50px"
+      ></div>
+    </div>
+
+    <h3 id="nodeParent" style="text-align: center;">node parent</h3>
+
+    <div id="h3Parent">
+      <h3 id="p1">this is a h3</h3>
+      <h3 id="p2">this is another h3</h3>
+    </div>
+
+    <select name="" id="select" onchange="selectedE(this)">
+      <option value="1">egg </option>
+      <option value="2">crab </option>
+      <option value="3">chicken </option>
+      <option value="4">pork </option>
+    </select>
+    <br />
+    <h1>arrow function</h1>
+    <br />
+
+    <select name="" id="select" onchange="select(event)">
+      <option value="1">egg </option>
+      <option value="2">crab </option>
+      <option value="3">chicken </option>
+      <option value="4">pork </option>
+    </select>
+
+    <br /><br />
+    <div id="radioParent">
+      male
+      <input type="radio" name="gen" value="male" />
+      female<input type="radio" name="gen" value="female" />
+
+      other<input type="radio" name="gen" value="other" />
+    </div>
+    <br />
+    <button onclick="radioCheck();"><h5>what is selected</h5></button>
+
+    <button onclick="">change text in all html h1s to valar mogulis</button>
+    <script>
+      //change by js
+      let changeH1 = () => {
+        document.getElementById("h1id").innerHTML = "changed by js";
+      };
+
+      //change color of all h1 tags using getElementBy TAg name
+      let allh1 = document.getElementsByTagName("h1");
+      Array.from(allh1).forEach(element => {
+        element.style.backgroundColor = "red";
+      });
+
+      //change color of h4 by finding it by class name
+      let changeH4 = () => {
+        let biClass = document.getElementsByClassName("bi")[0];
+        biClass.style.backgroundColor =
+          biClass.style.backgroundColor === "lime" ? "" : "lime";
+      };
+
+      //change html element with certain class
+      let certain = () => {
+        document.querySelectorAll("h4.ci")[0].style.color = "green";
+      };
+
+      //form elements
+      let form123 = () => {
+        Array.from(document.getElementById("form123")).forEach(element => {
+          console.log(element.value);
+        });
+      };
+
+      //change Attributes
+      document.getElementById("img").src = "landscape.jpg";
+
+      //Animate elements
+
+      let ani = () => {
+        const box = document.getElementById("box");
+        let pos = 0;
+
+        let id = setInterval(() => {
+          if (pos === 350) {
+            clearInterval(id);
+          } else {
+            pos++;
+            box.style.top = `${pos}px`;
+            box.style.left = `${pos}px`;
+          }
+        }, 5);
+      };
+
+      //javascript event Listners
+      // event bubbling is important
+      //onclick >>>>>> click
+
+      document.getElementById("click1").addEventListener("click", () => {
+        alert("you clicked this");
+      });
+
+      document.getElementById("click1").addEventListener("mouseenter", () => {
+        console.log("you mouse enter");
+      });
+
+      window.addEventListener("resize", event => {
+        console.log(event);
+      });
+
+      //bubbling
+      document.getElementById("outer").addEventListener("click", () => {
+        console.log("outer");
+      });
+
+      document.getElementById("inner").addEventListener("click", () => {
+        console.log("inner");
+      });
+
+      //capturing
+      document.getElementById("outer1").addEventListener(
+        "click",
+        () => {
+          console.log("outer1");
+        },
+        true
+      );
+
+      document.getElementById("inner1").addEventListener(
+        "click",
+        () => {
+          console.log("inner1");
+        },
+        true
+      );
+
+      //Node creation
+      /*   The Difference Between an HTMLCollection and a NodeList
+    HTMLCollection items can be accessed by their name, id, or index number.
+
+     NodeList items can only be accessed by their index number.
+
+     Only the NodeList object can contain attribute nodes and text nodes.
+    */
+
+      //create node
+      const para = document.createElement("p");
+      const textNode = document.createTextNode("This id new.");
+
+      para.appendChild(textNode);
+
+      const nodeParent = document.getElementById("nodeParent");
+      nodeParent.appendChild(para);
+
+      //create node before some element in parent
+
+      const newH1 = document.createElement("h2");
+      const newTextNode = document.createTextNode("hello im a new text node");
+
+      newH1.appendChild(newTextNode);
+
+      const parent = document.getElementById("h3Parent");
+      const exsistingChild = document.getElementById("p1");
+
+      parent.insertBefore(newH1, exsistingChild);
+
+      newH1.appendChild(document.createTextNode("replacing node"));
+      //parent.replaceChild(newH1, exsistingChild);
+
+      //remove element
+
+      const elementRemove = document.getElementById("p2");
+      elementRemove.remove();
+
+      //get selected item
+      let selectedE = e => {
+        console.log(e.options[e.selectedIndex].text);
+      };
+
+      //get selected radio button
+      let radioCheck = () => {
+        let val = document.querySelector('input[name="gen"]:checked').value;
+        console.log(val + "with query selector");
+
+        const radioParent = document.getElementById("radioParent").children;
+        Array.from(radioParent).forEach(element => {
+          console.log(
+            element.checked ? element.value + " with children method" : ""
+          );
+        });
+      };
+      //get only children
+      
+    </script>
+<select name="" id="databases">
+</select>
+<script>
+
+let parent2=document.getElementById('databases');
+
+
+[...Array(10).keys()].map((params) => {
+  let database1= document.createElement('option');
+database1.append(document.createTextNode('sdfsfsfsfsf'+Math.random()));
+
+  return database1;
+}).forEach(element => {
+  console.log(element);
+  parent2.appendChild(element);
+ 
+});
+
+criteria.add(Restrictions.eq("city", "colombo"));
+            //mehema dammoth not equal
+            criteria.add(Restrictions.ne("city", "colombo"));
+            //ganna puluwan uparima result gana
+            criteria.setMaxResults(2);
+            //patanganne 3 weni index eke idala
+            criteria.setFirstResult(3);
+//name eka assending order ekata danna 
+            criteria.addOrder(Order.asc("name"));
+           
+            criteria.setProjection(Projections.rowCount());
+            criteria.setProjection(Projections.rowCount());
+            criteria.setProjection(Projections.max("password"));
+            criteria.setProjection(Projections.min("password"));
+            criteria.setProjection(Projections.sum("password"));
+            criteria.setProjection(Projections.avg("password"));
+
+ let ajaxPost = () => {
+      
+        let m = document.getElementById('m').value;
+        let p = document.getElementById('p').value;
+
+        let xmlHttp = new XMLHttpRequest();
+         let color=['red','black'];
+        let id=0;
+        
+         xmlHttp.onreadystatechange = (e) => {
+
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                       
+                        let response=xmlHttp.responseText;
+                         clearInterval(id);
+                     document.getElementById('nreq').innerHTML=response;
+                        document.getElementById('nreq').style.color="black";
+                    } else {
+                       
+                        
+                      document.getElementById('nreq').innerHTML="Wait processing !";
+                    
+id=setInterval(function () {
+              document.getElementById('nreq').style.color=color[Math.floor(Math.random()*2)];
+                        
+            },500);
+            console.log(id);
+                    }
+                };
+        
+        xmlHttp.open("POST", "signIn", true);
+        xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlHttp.send(`m=${m}&p=${p}`);
+
+    };      
+</script>
+
+
+<div>
+  <img src="" alt="">
+  <span>Google pixel 4</span><br>
+  <span>Price:Google pixel 4</span><br>
+  <span>Qty:Google pixel 4</span><br>
+  <span>Brand:Google </span><br>
+<span>description:Best phone in the world</span>
+</div>
+
+<table>
+
+
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<h1>Sign in</h1>
+
+<textarea name="" id="" cols="30" rows="10"></textarea>
+<span>Mobile</span>
+<input type="text">
+<br><br> 
+<span>Mobile</span>
+<input type="password">
+<br><br>
+<button>Sign in</button>
+
+
+<table class=".thli">
+
+<tr>
+
+  <td>
+    <span>Brand</span>
+    <select name="" id=""></select>
+    <select name="" id=""></select>
+    <select name="" id=""></select>
+  </td>
+  <td></td>
+  <td></td>
+
+</tr>
+
+</table>
+
+
+</body>
+</html>
