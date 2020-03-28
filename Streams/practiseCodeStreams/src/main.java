@@ -38,7 +38,10 @@ public class main {
     }
 
 
+    //permutation 1234
+    permutation("1234");
   }
+
 
   public static void permutation(String str) {
     //a great example for kotlin default arguments
@@ -47,9 +50,6 @@ public class main {
 
   private static void permutation(String prefix, String str) {
     if (str.length() == 0) System.out.println(prefix);
-    else {
-      for (int i = 0; i < str.length(); i++)
-        permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, str.length()));
-    }
+    else IntStream.range(0,str.length()).forEach(i->{permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, str.length())); });
   }
 }
