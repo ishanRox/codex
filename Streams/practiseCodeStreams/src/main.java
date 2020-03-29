@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,12 +53,13 @@ public class main {
   if (anagrame0==null|anagrame1==null) System.out.println(false);
   if (anagrame0.length()!=anagrame1.length()) System.out.println(false);
 
-//(\w+) regex word seperate
-    Matcher groups = Pattern.compile("(\\w+)").matcher("dfsf sdfsf d");
-    if (groups.find()){
-      System.out.println(groups.group());
-    }
 
+    System.out.println("________________________________________________________________________________");
+//(\w+) regex word seperate
+    String word1="ishan vimukthi   vihanf dfdf";
+    String[] split = word1.split("[ .,?!]+");
+    System.out.println(split.length);
+    Arrays.stream(split).forEach(System.out::println);
 
   }
 
@@ -65,6 +67,18 @@ public class main {
   public static void permutation(String str) {
     //a great example for kotlin default arguments
     permutation("", str);
+  }
+
+
+  static boolean isAnagram(String a, String b) {
+
+    if (b==null|a==null|b.length()!=a.length()) return false;
+    b=b.toLowerCase();
+    a=a.toLowerCase();
+    for (int i = 0; i < b.length(); i++) {
+      a = a.replaceFirst(b.charAt(i) + "", "");
+    }
+    return a.equals("");
   }
 
   private static void permutation(String prefix, String str) {
