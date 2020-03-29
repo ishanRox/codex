@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,12 +23,11 @@ public class main {
               return "000".substring(e.length()) + e;
             })
             .forEach(System.out::println);
-    ;
 
     //fill gaps 00ish
     String a = "ish";
     String b = "00000";
-    System.out.println(a + b.substring(a.length(), b.length()));
+    System.out.println(a + b.substring(a.length()));
 
     //  permutation("ishan");
 
@@ -34,12 +35,30 @@ public class main {
     String word = "ishan";
     for (int i = 0; i < word.length(); i++) {
       System.out.println(word.charAt(i));
-      System.out.println(word.substring(0, i) + word.substring(i + 1, word.length()));
+      System.out.println(word.substring(0, i) + word.substring(i + 1));
     }
 
 
     //permutation 1234
     permutation("1234");
+
+    //anagrame
+
+
+    String anagrame0 = "aa";
+    String anagrame1 = "aaaaa";
+
+  //  if (anagrame0.length()!=anagrame1.length())return false;
+  if (anagrame0==null|anagrame1==null) System.out.println(false);
+  if (anagrame0.length()!=anagrame1.length()) System.out.println(false);
+
+//(\w+) regex word seperate
+    Matcher groups = Pattern.compile("(\\w+)").matcher("dfsf sdfsf d");
+    if (groups.find()){
+      System.out.println(groups.group());
+    }
+
+
   }
 
 
@@ -50,6 +69,8 @@ public class main {
 
   private static void permutation(String prefix, String str) {
     if (str.length() == 0) System.out.println(prefix);
-    else IntStream.range(0,str.length()).forEach(i->{permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, str.length())); });
+    else IntStream.range(0, str.length()).forEach(i -> {
+      permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1));
+    });
   }
 }
