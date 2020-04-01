@@ -140,15 +140,61 @@ fun main() {
 
     val noList = 1..10
     val evenList = noList.filter { it % 2 == 0 }
-    val sum =noList.sum()
+    val sum = noList.sum()
 
     println(evenList)
     println(sum)
+    println("_______________________________")
+
+    val mathMethod = higerOrderFun()
+    println(mathMethod(12, 13))
+
+    //shortcut for higer order
+    println(higerOrderFun()(12, 15))
+    println("_______________________________")
+
+    higherVoid("ishan")("vimukthi")
+
+    //how filter map and foreach made :-)
+    //megollange lambda eka mehemai { e -> e % 2 == 0 }
+    println(almostLikeFilter((1..10).toList(), { e -> e % 2 == 0 }))
+    println(almostLikeFilter((1..10).toList(), { e -> e % 2 == 1 }))
+    println("_______________________________")
+
 
 }
 
+//function that get a function and list
+fun almostLikeFilter(list: List<Int>, predicate: (Int) -> Boolean): List<Int> {
 
+    val arrayList = arrayListOf<Int>()
 
+    for (x in list) {
+        val filter = predicate(x)
+        if (filter) arrayList.add(x)
+    }
+
+    return arrayList
+}
+
+//function that return functions
+// return ekedi para and retrn wala type witharai ona
+// habai method ekak para weddi name ekak denna ona
+fun higerOrderFun(): (Int, Int) -> Int {
+
+    return { a, b ->
+        println("A is $a B is $b ")
+        a + b
+    }
+}
+
+//return type void
+fun higherVoid(name1: String): (String) -> Unit {
+    return { name2 ->
+        println("$name1 vs $name2")
+    }
+
+}
 
 //awsome tailrecurtion no need to call itself
 // every one knows it because its a keyword
