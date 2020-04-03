@@ -161,7 +161,186 @@ fun main() {
     println(almostLikeFilter((1..10).toList(), { e -> e % 2 == 1 }))
     println("_______________________________")
 
+    //map reduce and filter ....
 
+    val listFor = 1..10
+    //ekakhari ehemada
+    println(listFor.any { it == 2 })
+    //okkoma ehemada
+    println(listFor.all { it < 100 })
+
+    println(listFor.reduce { total, element ->
+        total + element
+    })
+    //with initial valur
+    println(listFor.fold(10) { total, value ->
+        total + value
+    })
+
+
+    //exceptions
+    val divisor = 10
+    try {
+        if (divisor == 0) {
+            throw IllegalArgumentException("Cant divide by Zero")
+        }
+    } catch (e: IllegalArgumentException) {
+        println(e.printStackTrace())
+    }
+
+
+    println("_______________________________")
+    //collection kotlin
+
+    var list1: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5)
+    val list2: List<Int> = listOf(1, 2, 3)
+
+    println(list1.first())
+    println(list1.last())
+    println(list1[2])
+    println(list1.subList(0, 2))
+    println(list1)
+    println(list1.size)
+    println(list1.remove(1))
+
+    println("_______________________________")
+
+    //How maps work in kotlin
+    val map = mutableMapOf<Int, Any?>()
+    val anotherMap = mutableMapOf(1 to "ishan", 2 to 1234)
+    println(anotherMap)
+    println("Map size :${map.size}")
+    map.put(3, "kotlin sen petersberg")
+    for ((key, value) in anotherMap) {
+        println("key $key value $value")
+    }
+
+
+    println("_______________________________")
+    //classes
+    //false nam illeagal argument excepton ekak pennanawa
+    require(true) {
+        "If condition is false this will be shown !"
+    }
+
+    //Make a "new" Object
+    val gawara = Animal("Gawara", 6.0, 11)
+    println(gawara)
+    println(gawara.getInfo())
+
+    val dog = Dog("mpala", 5.6, 100, "Ranil")
+    println(dog.owner)
+
+    println("_______________________________")
+    //interface implementation
+    val bird = Bird("Eagle", true)
+    bird.fly(100)
+
+
+    //Billion doller problem Tony hoare
+    //Null can not be a value of a non-null type String
+
+    //deep null there are 4 operators
+    //by default kotlin avoid null
+    //to assign null we use? operator
+    //we can nullable types using this Int?
+    val nameLength: String? = null
+    //1.Safe call
+    //you cant directly call nameLength.length
+    //insted u must use safe call or nonnull
+    //when we use safecall if val is null
+    // right side operation to safecall
+    // ignored and null is returned but no exception
+    //in java if we use null it gives exception(printis ok also in java)
+    println("The length of the name is ${nameLength?.length}")
+    println("after safe call null ")
+
+    //null pennannama one naththam safecall blocks use karanna
+    //null nam block eka athulata yannne na
+    nameLength?.let {
+        println(nameLength.length)
+    }
+    println("after safe call block ")
+
+    //Elvis operator
+    var ifElseNull = if (nameLength != null) nameLength.length else "no name bro !"
+    //we can write above in elvis
+    println(ifElseNull)
+    //if (nameLength != null) name.length==name?.length
+    //?: "elvis help us"== else part
+    var elvisNull = nameLength?.length ?: "elvis help us in null"
+    println(elvisNull)
+
+    //If you sure  you can tell compiler i am sure their is no null
+    // And kotlin allows that by non-null assertion operator
+    // But if you screwed up you end up getting same old null  pointer exception you cant do anything
+    println(nameLength!!.length)
+    println("after non null operator")
+}
+
+//sorry no static methods
+//default final unless open classes
+
+open class Animal(
+    val name: String,
+    var height: Double,
+    var weight: Int
+) {
+
+
+    init {
+        val regex = Regex(".*\\d+.*")
+        require(!name.matches(regex)) { "No digi in name" }
+        require(height > 0) { "Height must be greater than zero" }
+        require(weight > 0) { "weight must be greater than zero" }
+    }
+
+    override fun toString(): String {
+        return "name $name weight $weight height $height"
+    }
+
+    //method  must be open to override
+
+    open fun getInfo(): String {
+        return when (weight) {
+            in 1..10 -> "Beast"
+            in 10..100 -> "1Beast"
+            in 100..1000 -> "2Beast"
+            else -> "huge shit"
+        }
+    }
+
+}
+
+// Inheritance from Animal
+class Dog(
+    name: String,
+    height: Double,
+    weight: Int,
+    var owner: String
+) : Animal(name, height, weight) {
+    override fun getInfo(): String {
+        return owner
+    }
+}
+
+//interface
+interface Flyable {
+    var flies: Boolean
+    fun fly(miles: Int): Unit
+}
+
+class Bird constructor(val name: String, override var flies: Boolean) : Flyable {
+
+    override fun fly(miles: Int) {
+        println(
+            "$name ${if (!flies) {
+                "do not fly"
+            } else {
+                "fly $miles miles"
+            }} "
+        )
+    }
 }
 
 //function that get a function and list
