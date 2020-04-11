@@ -1,0 +1,73 @@
+ways sorting soring algorithems
+
+
+1.Time complexity
+2.Space complexity-in place=quickSort,growing=mergesort
+3.stability-1sttime ishan=90,saman=90 second time saman=90,ishan=90 ===>unstable
+4.Internal and External - in Ram or Disk
+5.Recursive or non 
+
+
+Selection Sort
+______________
+
+1. there are set of cards get first and compare it with all other cards get smallest one and swap
+
+4 5 2 3 9
+
+
+4 5 3 9    2
+
+4 5 9    2  3
+
+5 9    2 3 4
+
+5 9   2 3 4 5
+
+    2 3 4 5 9
+
+ sorted== 2 3 4 5 9
+
+
+BubbleSort
+__________
+
+
+2. In bubble sort we we get first card and check it with card next to it if its high swap
+
+ 4 3 2 1
+
+forloop1  forloop2
+0         4321 3421 3241 3214
+1         3214 2314 2134 
+2         2134 1234
+3         1234
+
+
+SelectionSort
+
+3. we  have cards as 3 2 1 and selection sort goes like this
+   we hav 3 cards we keep first card aside and start with second
+
+
+3 2 1
+
+3 | hole 1 
+
+3>2=hole value
+
+hole 3 1
+
+hole=2=hole value
+
+2 3 | hole
+
+3>1=hole value
+
+2 | hole 3
+
+2>1=hole value
+
+hole 2 3
+
+hole=1=hole value
