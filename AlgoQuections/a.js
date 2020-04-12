@@ -86,7 +86,28 @@ let number = (no) => {
   };
 };
 
-//
+//another tasty curry
+function sum(x, y, z) {
+  return x + y + z;
+}
+//x ta para yawwama y dana function eka denawa yta yawwama z denawa zta yawwama x y z sum eka
+let currySum = (x) => {
+  return (y) => {
+    return (z) => {
+      return x + y + z;
+    };
+  };
+};
+//can simplified as this  (x) => (y) => (z) => x + y + z;
+
+console.log(currySum(1)(2)(3), "A nice curry");
+//now awsomeness
+let addTo10and20 = currySum(10)(20);
+console.log(addTo10and20(100), "100 added to memorized 10 20");
+console.log(addTo10and20(1), "1 added to memorized 10 20");
+console.log(addTo10and20(30), "30 added to memorized 10 20");
+
+//main
 ((main) => {
   let square = number(2);
   console.log(square(2));
