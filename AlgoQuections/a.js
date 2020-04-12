@@ -1,3 +1,4 @@
+//js things
 function swap(array, a, b) {
   let temp = array[a];
   array[a] = array[b];
@@ -42,16 +43,6 @@ let restVar = (a, ...b) => {
   console.log(a, b);
 };
 
-let array = [4, 3, 2, 1];
-console.log(array);
-insertionSort(array);
-console.log(array);
-perm("", "abc");
-
-console.log("ishan".substring(0));
-
-restVar(1, 2, 3, 4);
-
 function perm(prefix, word) {
   if (word == "") {
     console.log(prefix);
@@ -61,3 +52,51 @@ function perm(prefix, word) {
     perm(prefix + word[i], word.substring(0, i) + word.substring(i + 1));
   }
 }
+
+//partially applied functions
+//user only needed to invoke complex arguments are handled by code
+function notInvoked(x, y, z) {
+  console.log(`x ${x} y ${y} z ${z}`);
+}
+let onlyUserNeededInvocation = notInvoked.bind(null, 12, 13, 14);
+onlyUserNeededInvocation();
+
+//A closure is a function having access to the parent scope, even after the parent function has closed.
+function count() {
+  let counter = 10;
+  console.log("outer count function called");
+  return () => {
+    counter++;
+    console.log(counter);
+  };
+}
+let increaseCount = count();
+increaseCount();
+increaseCount();
+increaseCount();
+
+//closures and curring
+// technique of translating the evaluation of a function that takes multiple arguments into evaluating a sequence of functions
+
+let number = (no) => {
+  return (squaringAmount) => {
+    return [...Array(squaringAmount - 1).keys()].reduce((total, val) => {
+      return total * no;
+    }, no);
+  };
+};
+
+//
+((main) => {
+  let square = number(2);
+  console.log(square(2));
+  console.log(square(3));
+  console.log(square(4));
+  // let array = [4, 3, 2, 1];
+  // console.log(array);
+  // insertionSort(array);
+  // console.log(array);
+  // perm("", "abc");
+  // console.log("ishan".substring(0));
+  // restVar(1, 2, 3, 4);
+})();
