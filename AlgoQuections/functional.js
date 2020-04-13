@@ -1,43 +1,28 @@
 //js things
-function swap(array, a, b) {
-  let temp = array[a];
-  array[a] = array[b];
-  array[b] = temp;
-}
+// let i = 100;
 
-let bubbleSort = (array) => {
-  for (let i = 0; i < array.length - 1; i++) {
-    for (let j = 0; j < array.length - 1 - i; j++) {
-      if (array[j] > array[j + 1]) {
-        swap(array, j, j + 1);
-      }
-    }
-  }
-};
+// let method = window.setTimeout(() => {
+//   document.getElementById("aa").innerHTML = "get changed";
+//   window.alert("changed");
+// }, 2000);
 
-let selectionSort = (array) => {
-  for (let i = 0; i < array.length; i++) {
-    let min = i;
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[min] > array[j]) {
-        min = j;
-      }
-    }
-  }
-};
+// console.log(`${method}`);
 
-let insertionSort = (array) => {
-  for (let i = 1; i < array.length; i++) {
-    let holeIndex = i;
-    let holeValue = array[i];
+// let timer = window.setInterval(
+//   () =>
+//     (document.getElementById("aa").style.color = `rgb(${Math.floor(
+//       Math.random() * 256
+//     )}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
+//       Math.random() * 256
+//     )})`),
+//   2000
+// );
 
-    while (holeIndex != 0 && array[holeIndex - 1] > holeValue) {
-      array[holeIndex] = array[holeIndex - 1];
-      holeIndex--;
-    }
-    array[holeIndex] = holeValue;
-  }
-};
+// function stop() {
+//   window.clearInterval(method);
+//   window.clearInterval(timer);
+//   console.log("method stoped");
+// }
 
 let restVar = (a, ...b) => {
   console.log(a, b);

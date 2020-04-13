@@ -75,10 +75,54 @@ function swap(array, i, min) {
   array[min] = temp;
 }
 
-let numberArray = [1, 2, 3, 4, 5];
-insertionSort(numberArray);
+let merge = (array, left, right) => {
+  let mainIndex = 0,
+    leftIndex = 0,
+    rightIndex = 0;
+
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] <= right[rightIndex]) {
+      array[mainIndex] = left[leftIndex];
+      leftIndex++;
+    } else {
+      array[mainIndex] = right[rightIndex];
+      rightIndex++;
+    }
+    mainIndex++;
+  }
+
+  while (rightIndex < right.length) {
+    array[mainIndex] = right[rightIndex];
+    rightIndex++;
+    mainIndex++;
+  }
+  while (leftIndex < left.length) {
+    array[mainIndex] = left[leftIndex];
+    leftIndex++;
+    mainIndex++;
+  }
+};
+let sort = (array) => {
+  if (array.length < 2) return;
+  console.log(array);
+  //float val reduction
+  let mid = Math.floor(array.length / 2);
+  let leftArray = new Array(mid);
+  let rightArray = new Array(array.length - mid);
+  for (let i = 0; i < mid; i++) {
+    leftArray[i] = array[i];
+  }
+  for (let i = mid; i < array.length; i++) {
+    rightArray[i - mid] = array[i];
+  }
+
+  sort(leftArray);
+  sort(rightArray);
+  merge(array, leftArray, rightArray);
+};
+let numberArray = [4, 5, 6, 7, 1, -2];
+//insertionSort(numberArray);
 //bubbleSort(numberArray);
 //selectionSort(numberArray);
+sort(numberArray);
 console.log(numberArray);
-
-console.log("ishan;".indexOf("f") != -1);
