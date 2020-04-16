@@ -151,3 +151,36 @@ o.arrowFun();
 //With a regular function this represents the object that calls the function:
 
 //With an arrow function this represents the owner of the function:
+//https://stackoverflow.com/questions/36717376/arrow-function-in-object-literal
+//https://stackoverflow.com/questions/48295265/lexical-scope-in-javascript
+
+//normal function wala this call karana kena (caller)
+//arrow wala this wenne arrow eka hadapu thana this(owner)
+
+let a = {
+  name: "ishan",
+  foo: function () {
+    //methana this a object eka
+    [4, 3, 2, 1].forEach((element) => {
+      console.log(this, this == a);
+    });
+  },
+};
+
+a.boo = function () {
+  console.log(`${this} booo`);
+};
+a.noo = () => console.log(`${this} noo`);
+//owner(haduwe kawru gawada) of noo is window so this==window
+a.noo();
+
+//caller is a regualar function
+a.boo();
+
+//caller is a but arrow inside another function so this==a
+a.foo();
+
+//methana this window object eka
+[4, 3, 2, 1].forEach((element) => {
+  console.log(this, this == a);
+});
