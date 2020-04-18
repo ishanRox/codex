@@ -154,8 +154,9 @@ o.arrowFun();
 //https://stackoverflow.com/questions/36717376/arrow-function-in-object-literal
 //https://stackoverflow.com/questions/48295265/lexical-scope-in-javascript
 
+//******************************************************
 //normal function wala this call karana kena (caller)
-//arrow wala this wenne arrow eka hadapu thana this(owner)
+//arrow wala this wenne arrow eka hadapu thana this(owner)(parent gen inherit wenwa)
 
 let a = {
   name: "ishan",
