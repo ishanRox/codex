@@ -35,16 +35,10 @@ th {
 		File file = null;
 	int maxFileSize = 5000 * 1004;
 	int maxMemSize = 5000 * 1004;
+	//if dont have E use access ok drive
 	String filePath = "E:/";
-	List<String> list = new ArrayList();
-	//Set<String> listOfOtherMethodCallsThisFile = new HashSet();
-
-	Map<String, String> normalToNormal = new LinkedHashMap();
-	Map<String, String> normalToRecursive = new LinkedHashMap();
-	Map<String, String> RecursiveToNormal = new LinkedHashMap();
-	Map<String, String> RecursiveToRecursive = new LinkedHashMap();
-
-	Map<String, String> globalVar = new LinkedHashMap();
+	
+	List<File> fileList = new ArrayList();
 
 	String contentType = request.getContentType();
 	if ((contentType.indexOf("multipart/form-data") >= 0)) {
@@ -56,8 +50,10 @@ th {
 		upload.setSizeMax(maxFileSize);
 		try {
 			List fileItems = upload.parseRequest(request);
+
+			System.out.println(fileItems + " File List");
 			Iterator i = fileItems.iterator();
-			out.println("<h1>Main code</h1>");
+			out.println("<h1>All Files Complexity </h1>");
 			out.println("<hr>");
 			while (i.hasNext()) {
 		FileItem fi = (FileItem) i.next();
@@ -66,13 +62,30 @@ th {
 			String fileName = fi.getName();
 			boolean isInMemory = fi.isInMemory();
 			long sizeInBytes = fi.getSize();
-			file = new File(filePath + "yourFileName");
+			file = new File(filePath + Math.random() + ".txt");
 			fi.write(file);
+			System.out.println(file + "A file");
+			fileList.add(file);
 			//   out.println("Uploaded Filename: " + filePath + fileName + "<br>");
 		}
 			}
+			
+		
+			
+for(File nowfile:fileList){
+	List<String> list = new ArrayList();
+	//Set<String> listOfOtherMethodCallsThisFile = new HashSet();
 
-			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	Map<String, String> normalToNormal = new LinkedHashMap();
+	Map<String, String> normalToRecursive = new LinkedHashMap();
+	Map<String, String> RecursiveToNormal = new LinkedHashMap();
+	Map<String, String> RecursiveToRecursive = new LinkedHashMap();
+
+	Map<String, String> globalVar = new LinkedHashMap();
+
+	
+	try (BufferedReader br = new BufferedReader(new FileReader(nowfile))) {
+
 		String line;
 		int no = 1;
 
@@ -83,24 +96,19 @@ th {
 			out.println(line + "</br>");
 			no++;
 		}
-			}
-			out.println("<hr>");
-			out.println("<br><br>");
-		} catch (Exception ex) {
-			System.out.println(ex);
-		}
-	} else {
-		out.println("<html>");
-		out.println("<body>");
-		out.println("<p>No file uploaded</p>");
-		out.println("</body>");
-		out.println("</html>");
-	}
+		}catch(Exception e){		e.printStackTrace();   }
 
+	
+	out.println("<hr>");
+	out.println("<hr>");
+	out.println("<br><br>");
+	out.println("<br><br>");
+	
+	
 	String regexString = "";
 
-	for (int i = 0; i < list.size(); i++)
-		regexString += list.get(i) + "\n";
+	for (int x = 0; x < list.size(); x++)
+		regexString += list.get(x) + "\n";
 
 	System.out.println(regexString);
 
@@ -137,7 +145,7 @@ th {
 			// 			System.out.println(matcher.group(1));
 			method.setRecursiveCallNo(matcher.group(1));
 		}
-		System.out.println(thisFileMethods+"_________________________________________");
+		System.out.println(thisFileMethods + "_________________________________________");
 
 		thisFileMethods.put(onlyMethodName, method);
 	}
@@ -165,14 +173,9 @@ th {
 	thisFileMethods.entrySet().stream().forEach((entry) -> {
 		System.out.println("\n\n");
 		System.out.println(entry.getKey() + "  a mwthod in this file");
-		// 		System.out.println("body of it without own method calls");
-
-		//System.out.println(entry.getValue().getMethodBody().replaceAll(entry.getKey() + "|if", ""));
-
 		System.out.println(entry.getValue().isRecursiveCall() + " is rec");
 
 		String bodyWithOutMethod = entry.getValue().getMethodBody().replaceAll(entry.getKey(), "");
-
 		thisFileMethods.entrySet().stream().filter(e -> !e.getKey().equals(entry.getKey())).forEach(methodName -> {
 			//get other method calls from this method	
 			System.out.println(methodName.getKey());
@@ -216,22 +219,7 @@ th {
 
 		});
 
-		// 		Pattern pattern = Pattern.compile(".*");
-		// 					Matcher matcher = pattern.matcher(bodyWithOutMethod);
-		// 					while (matcher.find()) {
-		// 				System.out.println(matcher.group() + " other methods");
-		// 					}
-
-		//remove new
-		// 			bodyWithOutMethod = bodyWithOutMethod.replaceAll("new (\\w)+?\\((.)*?\\)", "");
-
-		// 			Pattern pattern = Pattern.compile("(\\w)+?\\((.)*?\\)");
-		// 			Matcher matcher = pattern.matcher(bodyWithOutMethod);
-		// 			while (matcher.find()) {
-		// 		System.out.println(matcher.group() + " other methods");
-		// 			}
-
-		// 			System.out.println("");
+	
 	});
 
 	System.out.println(normalToNormal + "  normalToNormal");
@@ -239,16 +227,10 @@ th {
 	System.out.println(RecursiveToNormal + " RecursiveToNormal");
 	System.out.println(RecursiveToRecursive + " RecursiveToRecursive");
 
-	//no of recursive methods
-	int Nr = thisFileMethods.values().stream().map(e -> e.isRecursiveCall() ? 1 : 0).reduce((v, t) -> v + t).get()
-			.intValue();
-
-	System.out.println(
-			thisFileMethods.values().stream().map(e -> e.isRecursiveCall() ? 1 : 0).reduce((v, t) -> v + t).get().intValue()
-			+ "  no of re");
+	
+	
 	%>
-
-
+	
 	<table style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
@@ -299,88 +281,91 @@ th {
 				<th>Ccp</th>
 
 			</tr>
+	
+	<% 
+	
+	for (int i1 = 0; i1 < list.size(); i1++) {
 
-			<%
-				for (int i = 0; i < list.size(); i++) {
+		String codeLine = list.get(i1).toString();
+		String number = codeLine.substring(0, codeLine.indexOf("#"));
 
-				String codeLine = list.get(i).toString();
-				String number = codeLine.substring(0, codeLine.indexOf("#"));
+		boolean[] isRecursiveMethod = { false };
 
-				boolean[] isRecursiveMethod = { false };
+		int[] normalToNormalVal = { 0 };
+		int[] normalToRecursiveVal = { 0 };
+		int[] RecursiveToNormalVal = { 0 };
+		int[] RecursiveToRecursiveVal = { 0 };
 
-				int[] normalToNormalVal = { 0 };
-				int[] normalToRecursiveVal = { 0 };
-				int[] RecursiveToNormalVal = { 0 };
-				int[] RecursiveToRecursiveVal = { 0 };
+		//check map  for any lines match this line
+		//check map  for any lines match this line
+		thisFileMethods.entrySet().forEach(e -> {
+			if (e.getValue().getRecursiveCallNo().equals(number)) {
+		isRecursiveMethod[0] = !isRecursiveMethod[0];
+		System.out.println(e.getValue().getRecursiveCallNo() + "this line own recursive call happens");
+			}
+		});
 
-				//check map  for any lines match this line
-				//check map  for any lines match this line
-				thisFileMethods.entrySet().forEach(e -> {
-					if (e.getValue().getRecursiveCallNo().equals(number)) {
-				isRecursiveMethod[0] = !isRecursiveMethod[0];
-				System.out.println(e.getValue().getRecursiveCallNo() + "this line own recursive call happens");
-					}
-				});
+		normalToNormal.entrySet().forEach(normal -> {
 
-				normalToNormal.entrySet().forEach(normal -> {
+			if (normal.getValue().equals(number))
+		normalToNormalVal[0]++;
+		});
 
-					if (normal.getValue().equals(number))
-				normalToNormalVal[0]++;
-				});
+		normalToRecursive.entrySet().forEach(normal -> {
 
-				normalToRecursive.entrySet().forEach(normal -> {
+			if (normal.getValue().equals(number))
+		normalToRecursiveVal[0]++;
+		});
 
-					if (normal.getValue().equals(number))
-				normalToRecursiveVal[0]++;
-				});
+		RecursiveToNormal.entrySet().forEach(normal -> {
 
-				RecursiveToNormal.entrySet().forEach(normal -> {
+			if (normal.getValue().equals(number))
+		RecursiveToNormalVal[0]++;
+		});
 
-					if (normal.getValue().equals(number))
-				RecursiveToNormalVal[0]++;
-				});
+		RecursiveToRecursive.entrySet().forEach(normal -> {
 
-				RecursiveToRecursive.entrySet().forEach(normal -> {
+			if (normal.getValue().equals(number))
+		RecursiveToRecursiveVal[0]++;
+		});
 
-					if (normal.getValue().equals(number))
-				RecursiveToRecursiveVal[0]++;
-				});
+		int globelVarUse[] = { 0 };
 
-				int globelVarUse[] = { 0 };
+		int globalUsedByR = 0;
+		int globalUsedByNonR = 0;
 
-				int globalUsedByR = 0;
-				int globalUsedByNonR = 0;
+		globalVar.entrySet().forEach(e -> {
 
-				globalVar.entrySet().forEach(e -> {
+			System.out.println(codeLine + " line   val " + e);
 
-					System.out.println(codeLine + " line   val " + e);
+			if (!e.getKey().trim().equals(number)) {
 
-				if (!e.getKey().trim().equals(number)) {
+		if (codeLine.matches("(.*)[ \\(=]*" + e.getValue().trim() + "[ \\)=;](.*)")) {
 
-				if (codeLine.matches("(.*)[ \\(=]*" + e.getValue().trim() + "[ \\)=;](.*)")) {
+			System.out.println(codeLine + " line founded   val " + e);
+			globelVarUse[0]++;
 
-					System.out.println(codeLine + " line founded   val " + e);
-					globelVarUse[0]++;
+		}
+			}
 
-				}
-					}
+		});
 
-				});
+		if (isRecursiveMethod[0]) {
+			globalUsedByR = globelVarUse[0];
+		} else {
+			globalUsedByNonR = globelVarUse[0];
 
-				if (isRecursiveMethod[0]) {
-					globalUsedByR = globelVarUse[0];
-				} else {
-					globalUsedByNonR = globelVarUse[0];
+		}
 
-				}
+		// 				System.out.println(normalToNormalVal[0] + " normal to normal " + number);
+		// 				System.out.println(normalToRecursiveVal[0] + " normalToRecursiveVal");
+		// 				System.out.println(RecursiveToNormalVal[0] + " RecursiveToNormalVal");
+		// 				System.out.println(RecursiveToRecursiveVal[0] + " RecursiveToRecursiveVal");
+		// 				System.out.println(globelVarUse[0] + " regularGloblVal");
+%>
 
-				// 				System.out.println(normalToNormalVal[0] + " normal to normal " + number);
-				// 				System.out.println(normalToRecursiveVal[0] + " normalToRecursiveVal");
-				// 				System.out.println(RecursiveToNormalVal[0] + " RecursiveToNormalVal");
-				// 				System.out.println(RecursiveToRecursiveVal[0] + " RecursiveToRecursiveVal");
-				// 				System.out.println(globelVarUse[0] + " regularGloblVal");
-			%>
-			<tr>
+
+<tr>
 
 				<td><%=codeLine.substring(0, codeLine.indexOf("#"))%></td>
 				<td><%=codeLine.substring(codeLine.indexOf("#") + 1)%></td>
@@ -410,17 +395,40 @@ th {
 
 
 			</tr>
-			<%
-				}
-			%>
 
-
-
-
+<%} %>
 
 		</tbody>
 	</table>
 
+<% 
+	
+	
+	
+}
+			
+			
+			
+		
+			
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+
+	
+	
+	
+	
+	//file ekak naththm output eka
+	} else {
+		out.println("<html>");
+		out.println("<body>");
+		out.println("<p>No file uploaded</p>");
+		out.println("</body>");
+		out.println("</html>");
+	}
+	
+	%>
 
 
 </body>
