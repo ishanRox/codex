@@ -36,7 +36,7 @@ th {
 	int maxFileSize = 5000 * 1004;
 	int maxMemSize = 5000 * 1004;
 	//if dont have E use access ok drive
-	String filePath = "E:/";
+	String filePath = "E:/tempF";
 	
 	List<File> fileList = new ArrayList();
 
@@ -54,17 +54,18 @@ th {
 			System.out.println(fileItems + " File List");
 			Iterator i = fileItems.iterator();
 			out.println("<h1>All Files Complexity </h1>");
-			out.println("<hr>");
+			//out.println("<hr>");
 			while (i.hasNext()) {
 		FileItem fi = (FileItem) i.next();
 		if (!fi.isFormField()) {
 			String fieldName = fi.getFieldName();
 			String fileName = fi.getName();
+			
 			boolean isInMemory = fi.isInMemory();
 			long sizeInBytes = fi.getSize();
-			file = new File(filePath + Math.random() + ".txt");
+			file = new File(filePath + fileName.substring(fileName.indexOf("\\")+1));
 			fi.write(file);
-			System.out.println(file + "A file");
+			System.out.println(fileName.substring(fileName.indexOf("\\")+1) +  " A file");
 			fileList.add(file);
 			//   out.println("Uploaded Filename: " + filePath + fileName + "<br>");
 		}
@@ -73,6 +74,14 @@ th {
 		
 			
 for(File nowfile:fileList){
+	
+	%>
+	</br></br>
+	<hr>
+	<h1><%= nowfile.getName() %></h1>
+	<hr>
+	<% 
+	
 	List<String> list = new ArrayList();
 	//Set<String> listOfOtherMethodCallsThisFile = new HashSet();
 
@@ -395,8 +404,9 @@ for(File nowfile:fileList){
 
 
 			</tr>
+<%
 
-<%} %>
+	} %>
 
 		</tbody>
 	</table>
