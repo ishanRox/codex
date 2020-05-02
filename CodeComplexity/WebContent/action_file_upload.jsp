@@ -73,17 +73,97 @@ th {
 		}
 			}
 
-	//filter files for .java
-	
-	fileList=fileList.stream().filter(e->e.getName().endsWith(".java")).collect(Collectors.toList());
-			
-			//Get all methods and store them	
+			//filter files for .java
 
-			
-			
-			
-			
-			
+			fileList = fileList.stream().filter(e -> e.getName().endsWith(".java")).collect(Collectors.toList());
+
+			//Get all methods and store them	
+			List<String> allProgrammeList = new ArrayList();
+			Map<String, String> allGlobalVar = new LinkedHashMap();
+			Map<String, Method> allFileMethods = new HashMap();
+			for (File nowfile : fileList) {
+
+		try (BufferedReader br = new BufferedReader(new FileReader(nowfile))) {
+
+			String line;
+			int no = 1;
+
+			while ((line = br.readLine()) != null) {
+				// process the line.
+				//Add to list for no and codeline
+				allProgrammeList.add(no + "#" + line);
+
+				no++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String regexString = "";
+
+		for (int x = 0; x < allProgrammeList.size(); x++)
+			regexString += allProgrammeList.get(x) + "\n";
+		System.out.println("\n\n\n");
+
+		Matcher m = Pattern.compile("((.+\\(.*\\))( )*\\{(\\n|\\r|\\n|.)*?\\})").matcher(regexString);
+		while (m.find()) {
+
+			//name with access and return 
+			String methodName = m.group(2);
+
+			String methodWithAccessAndReturn = (methodName.replaceAll("\\(.*\\)", ""));
+
+			String onlyMethodName = methodWithAccessAndReturn.substring(methodWithAccessAndReturn.lastIndexOf(" "));
+
+			//System.out.println(onlyMethodName);
+			//	System.out.println("\n__________________________________________");
+
+			Method method = new Method();
+			String methodBody = m.group().substring(m.group().indexOf("{"));
+			method.setMethodBody(methodBody);
+
+			//get no of the recursive call to own mwthod
+			Pattern pattern = Pattern.compile("(\\d*)#.*" + onlyMethodName);
+			Matcher matcher = pattern.matcher(methodBody);
+			//set recursive call no and put to method object
+			if (matcher.find()) {
+
+				//check if method recursive
+				method.setRecursiveCall(true);
+				// 			System.out.println(matcher.group() + " own method call found");
+				// 			System.out.println(matcher.group(1));
+				method.setRecursiveCallNo(matcher.group(1));
+			}
+			//System.out.println(allFileMethods + "\n_________________________________________");
+
+			allFileMethods.put(onlyMethodName, method);
+		}
+		//all methods are added
+
+		//check global vaiables
+
+		//remove methods from class
+		String[] removeMetho = { regexString };
+
+		allFileMethods.entrySet().forEach(e -> {
+			removeMetho[0] = removeMetho[0].replace(e.getValue().getMethodBody(), "");
+		});
+
+		Matcher globalVariables = Pattern.compile("(\\d)+#.+ (.+)=.+;").matcher(removeMetho[0]);
+		while (globalVariables.find()) {
+
+			System.out.println(globalVariables.group(1) + " Globle variable found");
+			allGlobalVar.put(globalVariables.group(1), globalVariables.group(2));
+		}
+
+			}
+
+			allProgrammeList.forEach(System.out::println);
+            allFileMethods.entrySet().forEach(method->{System.out.println(method.getValue().getMethodBody()+"\n\n\n"); });
+			System.out.println(allGlobalVar + " all globle");
+
+			//individual class file checking	
+
 			for (File nowfile : fileList) {
 	%>
 	</br>
@@ -184,8 +264,7 @@ th {
 		System.out.println(globalVariables.group(1) + " Globle variable found");
 		globalVar.put(globalVariables.group(1), globalVariables.group(2));
 	}
-	
-	
+
 	System.out.println(removeMetho[0]);
 
 	//find other methods called in this method 
@@ -313,10 +392,9 @@ th {
 
 				//check map  for any lines match this line
 				//check map  for any lines match this line
-				int noOfRCall=0;
-				
-			
-						thisFileMethods.entrySet().forEach(e -> {
+				int noOfRCall = 0;
+
+				thisFileMethods.entrySet().forEach(e -> {
 					if (e.getValue().getRecursiveCallNo().equals(number)) {
 				isRecursiveMethod[0] = true;
 				System.out.println(e.getValue().getRecursiveCallNo() + "this line own recursive call happens");
@@ -352,39 +430,45 @@ th {
 				int globalUsedByR = 0;
 				int globalUsedByNonR = 0;
 
-				
-				
-				
-				
 				globalVar.entrySet().forEach(e -> {
 
-				//	System.out.println(codeLine + " line   val " + e);
-
+					//	System.out.println(codeLine + " line   val " + e);
+					//declare karapu thana magaharinna
 					if (!e.getKey().trim().equals(number)) {
 
-				if (codeLine.matches("(.*)[ \\(=]*" + e.getValue().trim() + "[ \\)=;](.*)")) {
+				//if (codeLine.matches("(.*)[ \\(=]*" + e.getValue().trim() + "[ \\)=;](.*)")) 
+				{
 
-				//	System.out.println(codeLine + " line founded   val " + e);
-					globelVarUse[0]++;
+					System.out.println(codeLine + " line founded   val " + e.getValue().trim());
+
+					int noOfVarInLine = 0;
+					Matcher matcher = Pattern.compile("(.*)[ \\(=+]*(" + e.getValue().trim() + ")[ \\)=;+](.*)")
+							.matcher(codeLine);
+					while (matcher.find()) {
+						System.out.println(matcher.group(2) + "   varrrrrrrrrrr   " + e.getValue());
+						noOfVarInLine++;
+					}
+
+					globelVarUse[0] += noOfVarInLine;
 
 				}
-				
-				
+
 					}
 
 				});
-				
-				
-				System.out.println(globalVar);
-				thisFileMethods.values().forEach(e->{
-					e.getMethodBody().contains(codeLine);
-					System.out.println(number+"   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa this line is in recusive method");
-				
-				}
-				
-				);
 
-				if (isRecursiveMethod[0]) {
+				boolean[] isGloblalCalledFromRecursive = { false };
+
+				//System.out.println(globalVar);
+				thisFileMethods.values().stream().filter(e -> e.isRecursiveCall()).collect(Collectors.toList()).forEach(e -> {
+
+					if (e.getMethodBody().contains(codeLine) && globelVarUse[0] > 0) {
+				isGloblalCalledFromRecursive[0] = true;
+				System.out.println(codeLine + "  globle in recursive");
+					}
+				});
+
+				if (isGloblalCalledFromRecursive[0]) {
 					globalUsedByR = globelVarUse[0];
 				} else {
 					globalUsedByNonR = globelVarUse[0];
