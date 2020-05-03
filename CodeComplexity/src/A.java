@@ -17,6 +17,8 @@ static	int x2 = 456;
 	}
 
 	public double Aa() {
+		int value1=B.x2;
+		
 		this.x1 = 1000 + x2;
 		this.x2 = this.x1;
 		this.x1 = 1000;
@@ -25,6 +27,8 @@ static	int x2 = 456;
 
 	public double getSqr(double num1) {
 
+		int value1=B.x3;
+		
 		//access global var of another file
 	    int fromOther =	B.x3;
 		

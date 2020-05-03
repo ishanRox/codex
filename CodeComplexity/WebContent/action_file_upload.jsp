@@ -1,4 +1,6 @@
 
+<%@page import="java.nio.file.Paths"%>
+<%@page import="java.nio.file.Path"%>
 <%@page import="java.util.stream.Collectors"%>
 <%@page import="java.util.stream.Collector"%>
 <%@page import="model.Method"%>
@@ -40,6 +42,9 @@ th {
 	//if dont have E use access ok drive
 	String filePath = "E:/";
 
+	Path root = Paths.get(".").normalize().toAbsolutePath();
+	String path = root.toAbsolutePath().toString();
+
 	List<File> fileList = new ArrayList();
 
 	String contentType = request.getContentType();
@@ -77,11 +82,13 @@ th {
 
 			fileList = fileList.stream().filter(e -> e.getName().endsWith(".java")).collect(Collectors.toList());
 
-			//Get all methods and store them	
-			List<String> allProgrammeList = new ArrayList();
+			//Get all methods and store them
+			//Get all VAr and store them
 			Map<String, String> allGlobalVar = new LinkedHashMap();
 			Map<String, Method> allFileMethods = new HashMap();
+
 			for (File nowfile : fileList) {
+		List<String> allProgrammeList = new ArrayList();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(nowfile))) {
 
@@ -105,6 +112,29 @@ th {
 			regexString += allProgrammeList.get(x) + "\n";
 		System.out.println("\n\n\n");
 
+		String className = "";
+
+		Matcher classF = Pattern.compile("class (.*)( )*\\{").matcher(regexString);
+		while (classF.find()) {
+			className = classF.group(1);
+
+		}
+
+		
+
+		//replace if } with +id to resolve complexity
+		Pattern p = Pattern.compile("if( )*\\((.)*\\)( )*\\{(.|\\n)*?(\\d+#.*})");
+		Matcher mif = p.matcher(regexString);
+		while (mif.find()) {
+			// replace first number with "number" and second number with the first
+			String identifier=mif.group(5);
+			String ifIdentify=identifier.replace("}","-if");
+			System.out.println(identifier+ "   ###################################################"+ifIdentify);
+			
+			regexString = regexString.replace(identifier, ifIdentify);
+		}
+		System.out.println(regexString+ "111111111111111111111   ###################################################");
+		
 		Matcher m = Pattern.compile("((.+\\(.*\\))( )*\\{(\\n|\\r|\\n|.)*?\\})").matcher(regexString);
 		while (m.find()) {
 
@@ -126,17 +156,20 @@ th {
 			Pattern pattern = Pattern.compile("(\\d*)#.*" + onlyMethodName);
 			Matcher matcher = pattern.matcher(methodBody);
 			//set recursive call no and put to method object
+
+			//	 			System.out.println(methodBody + " methooooooooooooooooooooooooooooo");
+
 			if (matcher.find()) {
 
 				//check if method recursive
 				method.setRecursiveCall(true);
-				// 			System.out.println(matcher.group() + " own method call found");
-				// 			System.out.println(matcher.group(1));
+				System.out.println(matcher.group() + " own method call found");
+				System.out.println(matcher.group(1));
 				method.setRecursiveCallNo(matcher.group(1));
 			}
 			//System.out.println(allFileMethods + "\n_________________________________________");
 
-			allFileMethods.put(onlyMethodName, method);
+			allFileMethods.put(onlyMethodName + "," + className, method);
 		}
 		//all methods are added
 
@@ -152,15 +185,20 @@ th {
 		Matcher globalVariables = Pattern.compile("(\\d)+#.+ (.+)=.+;").matcher(removeMetho[0]);
 		while (globalVariables.find()) {
 
-			System.out.println(globalVariables.group(1) + " Globle variable found");
-			allGlobalVar.put(globalVariables.group(1), globalVariables.group(2));
+			//System.out.println(globalVariables.group(1) + " Globle variable found");
+			allGlobalVar.put(globalVariables.group(1) + "," + className, globalVariables.group(2));
 		}
 
 			}
 
-			allProgrammeList.forEach(System.out::println);
-            allFileMethods.entrySet().forEach(method->{System.out.println(method.getValue().getMethodBody()+"\n\n\n"); });
-			System.out.println(allGlobalVar + " all globle");
+			//allProgrammeList.forEach(System.out::println);
+			allFileMethods.entrySet().forEach(method -> {
+		//	System.out.println(method.getValue().getMethodBody() + "\n\n\n");
+			});
+
+			allFileMethods.entrySet().stream().forEach(e -> {
+		System.out.println(e.getKey() + "name       isRecursive " + e.getValue().isRecursiveCall());
+			});
 
 			//individual class file checking	
 
@@ -207,8 +245,6 @@ th {
 
 	for (int x = 0; x < list.size(); x++)
 		regexString += list.get(x) + "\n";
-
-	System.out.println(regexString);
 
 	//Finding  methods
 	//Map designed with method name and method body
@@ -261,11 +297,11 @@ th {
 	Matcher globalVariables = Pattern.compile("(\\d)+#.+ (.+)=.+;").matcher(removeMetho[0]);
 	while (globalVariables.find()) {
 
-		System.out.println(globalVariables.group(1) + " Globle variable found");
+		//	System.out.println(globalVariables.group(1) + " Globle variable found");
 		globalVar.put(globalVariables.group(1), globalVariables.group(2));
 	}
 
-	System.out.println(removeMetho[0]);
+	//System.out.println(removeMetho[0]);
 
 	//find other methods called in this method 
 
