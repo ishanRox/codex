@@ -207,7 +207,7 @@ th {
 		System.out.println(e.getKey() + "name       isRecursive " + e.getValue().getMethodBody());
 			});
 
-			System.out.println(allGlobalVar);
+			//System.out.println(allGlobalVar);
 
 			//individual class file checking	
 
@@ -261,6 +261,28 @@ th {
 	//Map designed with method name and method body
 	Map<String, Method> thisFileMethods = new HashMap();
 
+	//replace if } with +if to resolve complexity
+	Pattern p = Pattern.compile("if( )*\\((.)*\\)( )*\\{(.|\\n)*?(\\d+#.*})");
+	Matcher mif = p.matcher(regexString);
+	while (mif.find()) {
+		// replace first number with "number" and second number with the first
+		String identifier = mif.group(5);
+		String ifIdentify = identifier.replace("}", "-if");
+		regexString = regexString.replace(identifier, ifIdentify);
+	}
+	//replace if end
+
+	//replace for } with +for to resolve complexity
+	Pattern p1 = Pattern.compile("for( )*\\((.)*\\)( )*\\{(.|\\n)*?(\\d+#.*})");
+	Matcher mif1 = p1.matcher(regexString);
+	while (mif1.find()) {
+		// replace first number with "number" and second number with the first
+		String identifier = mif1.group(5);
+		String ifIdentify = identifier.replace("}", "-for");
+		regexString = regexString.replace(identifier, ifIdentify);
+	}
+	//replace for  end
+	
 	Matcher m = Pattern.compile("((.+\\(.*\\))( )*\\{(\\n|\\r|\\n|.)*?\\})").matcher(regexString);
 	while (m.find()) {
 
@@ -324,7 +346,7 @@ th {
 		String bodyWithOutMethod = entry.getValue().getMethodBody().replaceAll(entry.getKey(), "");
 		thisFileMethods.entrySet().stream().filter(e -> !e.getKey().equals(entry.getKey())).forEach(methodName -> {
 			//get other method calls from this method	
-			System.out.println(methodName.getKey());
+			//System.out.println(methodName.getKey());
 			//	System.out.println(bodyWithOutMethod);
 
 			Pattern pattern = Pattern.compile("(\\d*)#.*" + methodName.getKey().trim());
@@ -427,8 +449,8 @@ th {
 			<%
 				for (int i1 = 0; i1 < list.size(); i1++) {
 
-				String originalCodeLine=list.get(i1).toString();	
-				String codeLine[] ={ list.get(i1).toString()};
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
 				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
 
 				boolean[] isRecursiveMethod = { false };
@@ -437,6 +459,11 @@ th {
 				int[] normalToRecursiveVal = { 0 };
 				int[] RecursiveToNormalVal = { 0 };
 				int[] RecursiveToRecursiveVal = { 0 };
+
+				int[] normalToOtherNormalM = { 0 };
+				int[] normalToOtherRecursiveM = { 0 };
+				int[] RecursiveToOtherNormalM = { 0 };
+				int[] RecursiveToOtherRecursiveM = { 0 };
 
 				//check map  for any lines match this line
 				//check map  for any lines match this line
@@ -481,30 +508,23 @@ th {
 				int globalFromOtherR = 0;
 				int globalFromOtherNonR = 0;
 
-				
-				
 				//check about globle var calling from other files
 
 				int globleFromOther[] = { 0 };
 
-				String [] replacement={""};
-				
+				String[] replacement = { "" };
+
 				allGlobalVar.entrySet().stream().forEach(e -> {
 					if (codeLine[0].contains(e.getKey().split(",")[1].trim() + "." + e.getValue())) {
-				
-						codeLine[0]=(codeLine[0].replaceAll(e.getKey().split(",")[1].trim() + "." + e.getValue(), ""));
-						
-						globleFromOther[0]++;
+
+				codeLine[0] = (codeLine[0].replaceAll(e.getKey().split(",")[1].trim() + "." + e.getValue(), ""));
+
+				globleFromOther[0]++;
 					}
 
 				});
-				
-				
-				
-				
-				globalVar.entrySet().forEach(e -> {
 
-					//	System.out.println(codeLine + " line   val " + e);
+				globalVar.entrySet().forEach(e -> {
 					//declare karapu thana magaharinna
 					if (!e.getKey().trim().equals(number)) {
 
@@ -530,36 +550,71 @@ th {
 				});
 
 				boolean[] isGloblalCalledFromRecursive = { false };
+				boolean[] isMethodRecursive = { false };
 
 				//System.out.println(globalVar);
 				thisFileMethods.values().stream().filter(e -> e.isRecursiveCall()).collect(Collectors.toList()).forEach(e -> {
 
 					if (e.getMethodBody().contains(codeLine[0])) {
-
+				isMethodRecursive[0] = true;
 				if (globelVarUse[0] > 0)
 					isGloblalCalledFromRecursive[0] = true;
 				//System.out.println(codeLine + "  globle in recursive");
 					}
 				});
 
-				
-				System.out.println(globleFromOther[0] + " gloable from tohther errrrrrrrrrrrr " + codeLine);
+				//check method calling of other file methods
+				allFileMethods.entrySet().stream().forEach(e -> {
+
+					String[] valArray = e.getKey().split(",");
+					if (codeLine[0].contains(valArray[1].trim() + "." + valArray[0].trim())) {
+
+				System.out.println(valArray[1].trim() + "." + valArray[0].trim()
+						+ " otherrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  " + originalCodeLine);
+
+				//is other Method is recursuve
+				if (e.getValue().isRecursiveCall()) {
+					if (isMethodRecursive[0]) {
+						//this file method isRecursive	  
+						//recursive to other method recursive call
+                       RecursiveToOtherRecursiveM[0]=1;
+						
+					} else {
+						//this file method normal		
+						//normal to other method recursive call
+						   normalToOtherRecursiveM[0]=1;
+					}
+
+				} else {
+					//is other Method is normal
+					if (isMethodRecursive[0]) {
+						//this file method isRecursive	  
+						//recursive to other method normal call
+                       RecursiveToOtherNormalM[0]=1;
+						
+					} else {
+						//this file method normal		
+						//normal to other method normal call
+					    normalToOtherNormalM[0]=1;
+					}
+				}
+
+					}
+
+				});
+
+				//System.out.println(globleFromOther[0] + " gloable from tohther errrrrrrrrrrrr " + codeLine);
 				//check is this method recursive and called one
 				if (isGloblalCalledFromRecursive[0]) {
-					System.out.println("this global from recursive    sssssssssssssssssssssssssssss");
+					//System.out.println("this global from recursive    sssssssssssssssssssssssssssss");
 					globalFromOtherR = globleFromOther[0];
 
 					globalUsedByR = globelVarUse[0];
+
 				} else {
 					globalUsedByNonR = globelVarUse[0];
 					globalFromOtherNonR = globleFromOther[0];
 				}
-
-				// 				System.out.println(normalToNormalVal[0] + " normal to normal " + number);
-				// 				System.out.println(normalToRecursiveVal[0] + " normalToRecursiveVal");
-				// 				System.out.println(RecursiveToNormalVal[0] + " RecursiveToNormalVal");
-				// 				System.out.println(RecursiveToRecursiveVal[0] + " RecursiveToRecursiveVal");
-				// 				System.out.println(globelVarUse[0] + " regularGloblVal");
 			%>
 
 
@@ -570,16 +625,16 @@ th {
 				<td><%=(isRecursiveMethod[0]) ? "1" : "0"%></td>
 
 				<td><%=normalToNormalVal[0]%></td>
-				<td>0</td>
+				<td><%=normalToOtherNormalM[0]%></td>
 
 				<td><%=normalToRecursiveVal[0]%></td>
-				<td>0</td>
+				<td><%=normalToOtherRecursiveM[0]%></td>
 
 				<td><%=RecursiveToRecursiveVal[0]%></td>
-				<td>0</td>
+				<td><%=RecursiveToOtherRecursiveM[0]%></td>
 
 				<td><%=RecursiveToNormalVal[0]%></td>
-				<td>0</td>
+				<td><%=RecursiveToOtherNormalM[0]%></td>
 
 				<td><%=globalUsedByNonR%></td>
 				<td><%=globalFromOtherNonR%></td>
