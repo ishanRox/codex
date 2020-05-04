@@ -12,6 +12,9 @@ static	int x2 = 456;
 		B b= new B();
 		b.BFileB();
 		
+		//Accessing normal B method from normal A method
+		B.BFileA();
+		
 		m2.answer();
 
 	}
@@ -27,6 +30,9 @@ static	int x2 = 456;
 
 	public double getSqr(double num1) {
 
+		//Accessing normal B method from recursive A method
+				B.BFileA();
+		
 		int value1=B.x3;
 		
 		//access global var of another file
@@ -40,6 +46,10 @@ static	int x2 = 456;
 	}
 
 	public double getCube(double num2) {
+		
+		//Accessing recursive B method from recursive A method
+				B.BFileRecursiveA(212);
+		
 		if (num2 == 0)
 			return 0;
 		else

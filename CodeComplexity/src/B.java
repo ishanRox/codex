@@ -10,7 +10,9 @@ public static int x3=200;
 	}
 	
 	public static void BFileB() {
-		
+		for(int i=0;i<10;i++) {
+			System.out.println("ishan");
+		}
 	}
 	
 	
