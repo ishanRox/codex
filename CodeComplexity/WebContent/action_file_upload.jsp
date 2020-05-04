@@ -427,8 +427,9 @@ th {
 			<%
 				for (int i1 = 0; i1 < list.size(); i1++) {
 
-				String codeLine = list.get(i1).toString();
-				String number = codeLine.substring(0, codeLine.indexOf("#"));
+				String originalCodeLine=list.get(i1).toString();	
+				String codeLine[] ={ list.get(i1).toString()};
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
 
 				boolean[] isRecursiveMethod = { false };
 
@@ -480,6 +481,27 @@ th {
 				int globalFromOtherR = 0;
 				int globalFromOtherNonR = 0;
 
+				
+				
+				//check about globle var calling from other files
+
+				int globleFromOther[] = { 0 };
+
+				String [] replacement={""};
+				
+				allGlobalVar.entrySet().stream().forEach(e -> {
+					if (codeLine[0].contains(e.getKey().split(",")[1].trim() + "." + e.getValue())) {
+				
+						codeLine[0]=(codeLine[0].replaceAll(e.getKey().split(",")[1].trim() + "." + e.getValue(), ""));
+						
+						globleFromOther[0]++;
+					}
+
+				});
+				
+				
+				
+				
 				globalVar.entrySet().forEach(e -> {
 
 					//	System.out.println(codeLine + " line   val " + e);
@@ -493,7 +515,7 @@ th {
 
 					int noOfVarInLine = 0;
 					Matcher matcher = Pattern.compile("(.*)[ \\(=+]*(" + e.getValue().trim() + ")[ \\)=;+](.*)")
-							.matcher(codeLine);
+							.matcher(codeLine[0]);
 					while (matcher.find()) {
 						//System.out.println(matcher.group(2) + "   varrrrrrrrrrr   " + e.getValue());
 						noOfVarInLine++;
@@ -512,7 +534,7 @@ th {
 				//System.out.println(globalVar);
 				thisFileMethods.values().stream().filter(e -> e.isRecursiveCall()).collect(Collectors.toList()).forEach(e -> {
 
-					if (e.getMethodBody().contains(codeLine)) {
+					if (e.getMethodBody().contains(codeLine[0])) {
 
 				if (globelVarUse[0] > 0)
 					isGloblalCalledFromRecursive[0] = true;
@@ -520,17 +542,7 @@ th {
 					}
 				});
 
-				//check about globle var calling from other files
-
-				int globleFromOther[] = { 0 };
-
-				allGlobalVar.entrySet().stream().forEach(e -> {
-					if (codeLine.contains(e.getKey().split(",")[1].trim() + "." + e.getValue())) {
-				globleFromOther[0]++;
-					}
-
-				});
-
+				
 				System.out.println(globleFromOther[0] + " gloable from tohther errrrrrrrrrrrr " + codeLine);
 				//check is this method recursive and called one
 				if (isGloblalCalledFromRecursive[0]) {
@@ -553,8 +565,8 @@ th {
 
 			<tr>
 
-				<td><%=codeLine.substring(0, codeLine.indexOf("#"))%></td>
-				<td><%=codeLine.substring(codeLine.indexOf("#") + 1)%></td>
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
 				<td><%=(isRecursiveMethod[0]) ? "1" : "0"%></td>
 
 				<td><%=normalToNormalVal[0]%></td>
