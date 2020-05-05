@@ -643,7 +643,8 @@ th {
 				<td><%=globalUsedByR%></td>
 				<td><%=globalFromOtherR%></td>
 
-				<td><%=45%></td>
+				<td><%=((isRecursiveMethod[0]) ?2:0)+normalToNormalVal[0]*2+normalToOtherNormalM[0]*3+normalToRecursiveVal[0]*3+normalToOtherRecursiveM[0]*4
+						+RecursiveToRecursiveVal[0]*4+RecursiveToOtherRecursiveM[0]*5+RecursiveToNormalVal[0]*3+RecursiveToOtherNormalM[0]*4+globalUsedByNonR*1+globalFromOtherNonR*2+globalUsedByR*1+globalFromOtherR*2%></td>
 
 
 
