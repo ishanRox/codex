@@ -614,27 +614,27 @@ th {
 
 				if (keys.containsKey(number.trim() + "," + currentClassName) && !codeLine[0].contains("class")) {
 
-					
-
 					if (codeLine[0].matches(".+(byte|short|int|long|float|double|boolean|char).+")) {
-				System.out.println(originalCodeLine + " this is primitive and global");
-				primitive = 1;scopeType = 2;
+				//System.out.println(originalCodeLine + " this is primitive and global");
+				primitive = 1;
+				scopeType = 2;
 					} else {
-				System.out.println(originalCodeLine + "  this is notttttt primitive and global");
-				global = 1;scopeType = 2;
+				//System.out.println(originalCodeLine + "  this is notttttt primitive and global");
+				global = 1;
+				scopeType = 2;
 					}
 
 				} else {
 
-					
-
 					if (codeLine[0].trim().matches("(.+)=.+;")) {
 				if (codeLine[0].matches(".+(byte|short|int|long|float|double|boolean|char).+")) {
-					System.out.println(originalCodeLine + " this is primitive and not global");
-					primitive = 1;scopeType = 1;
+					//System.out.println(originalCodeLine + " this is primitive and not global");
+					primitive = 1;
+					scopeType = 1;
 				} else {
-					System.out.println(originalCodeLine + "  this is notttttt primitive and not global");
-					global = 1;scopeType = 1;
+					//System.out.println(originalCodeLine + "  this is notttttt primitive and not global");
+					global = 1;
+					scopeType = 1;
 				}
 					}
 				}
@@ -652,7 +652,7 @@ th {
 
 				<td><%=global%></td>
 
-				<td><%= scopeType*((1 * primitive) + (2 * global)) %></td>
+				<td><%=scopeType * ((1 * primitive) + (2 * global))%></td>
 
 
 
@@ -660,16 +660,120 @@ th {
 			</tr>
 			<%
 				}
-			
 			%>
-
-
 		</tbody>
 	</table>
 	<br>
 	<br>
 
+	<h1>complexity of a program due to methods</h1>
+	<hr>
+	<br>
 
+	<table style="width: 100%">
+		<colgroup>
+			<col style="width: 1%;">
+			<col style="width: 48%;">
+			<col style="width: 1%;">
+
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+
+			<col style="width: 1%;">
+		</colgroup>
+
+
+
+		<!-- 
+		
+		Wmrt Npdtp Ncdtp Cm 
+		Put <thead>, <tbody>, and <tr>'s here! -->
+		<tbody>
+			<tr>
+				<th>no</th>
+				<th>Program statements</th>
+				<th>Wmrt</th>
+				<th>Npdtp</th>
+
+				<th>Ncdtp</th>
+				<th>Cm</th>
+
+
+
+			</tr>
+
+
+			<hr>
+
+			<%
+				for (int i1 = 0; i1 < list.size(); i1++) {
+
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
+
+				//		if(originalCodeLine.matches(".*(\\w+)( )+(\\w+)+( )*\\((.*)\\)( )*\\{.*"))
+				//	System.out.println(originalCodeLine+"  this is a method ");
+
+				Matcher methoFound = Pattern.compile("(\\w+)( )+(\\w+)+( )*\\((.*)\\)( )*\\{").matcher(originalCodeLine);
+				int returnTypePorO = 0;
+				int isPrimitive = 0;
+				int isComposite = 0;
+
+				while (methoFound.find()) {
+
+					String returnType = methoFound.group(1);
+					String parameter = methoFound.group(5);
+					System.out.println(returnType + "  Return Type  - parameter " + parameter);
+
+					if (returnType.matches(".*(byte|short|int|long|float|double|boolean|char).*")) {
+				System.out.println(" return type primitive ");
+				returnTypePorO = 1;
+					} else {
+
+				if (!returnType.contains("void")) {
+					returnTypePorO = 2;
+				}
+
+				System.out.println(" return type not primitive ");
+
+					}
+
+					if (parameter.matches(".*(byte|short|int|long|float|double|boolean|char).*")) {
+				System.out.println(" para type primitive ");
+				isPrimitive = 1;
+					} else {
+				isComposite = 1;
+				System.out.println(" para type not primitive ");
+
+					}
+
+				}
+			%>
+			<tr>
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
+				<td><%=returnTypePorO%></td>
+				<td><%=isPrimitive%></td>
+				<td><%=isComposite%></td>
+				<td><%=returnTypePorO + (1 * isPrimitive) + (2 * isComposite)%></td>
+			</tr>
+			<%
+				}
+			%>
+
+		</tbody>
+	</table>
 
 
 
@@ -921,7 +1025,6 @@ th {
 	<%
 		}
 
-	fileList = new ArrayList();
 	} catch (Exception ex) {
 		ex.printStackTrace();
 	}
