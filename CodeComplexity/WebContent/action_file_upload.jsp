@@ -36,7 +36,8 @@ th {
 </head>
 <body>
 	<%
-		File file = null;
+		String currentClassName = "";
+	File file = null;
 	int maxFileSize = 5000 * 1004;
 	int maxMemSize = 5000 * 1004;
 	//if dont have E use access ok drive
@@ -57,8 +58,6 @@ th {
 		upload.setSizeMax(maxFileSize);
 		try {
 			List fileItems = upload.parseRequest(request);
-
-			System.out.println(fileItems + " File List");
 			Iterator i = fileItems.iterator();
 			out.println("<h1>All Files Complexity </h1>");
 			//out.println("<hr>");
@@ -98,9 +97,11 @@ th {
 			while ((line = br.readLine()) != null) {
 				// process the line.
 				//Add to list for no and codeline
-				allProgrammeList.add(no + "#" + line);
+				if (!line.trim().equals("")) {
 
-				no++;
+					allProgrammeList.add(no + "#" + line);
+					no++;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,7 +111,6 @@ th {
 
 		for (int x = 0; x < allProgrammeList.size(); x++)
 			regexString += allProgrammeList.get(x) + "\n";
-		System.out.println("\n\n\n");
 
 		String className = "";
 
@@ -120,6 +120,7 @@ th {
 
 		}
 
+		currentClassName = className;
 		//replace if } with +if to resolve complexity
 		Pattern p = Pattern.compile("if( )*\\((.)*\\)( )*\\{(.|\\n)*?(\\d+#.*})");
 		Matcher mif = p.matcher(regexString);
@@ -152,9 +153,6 @@ th {
 
 			String onlyMethodName = methodWithAccessAndReturn.substring(methodWithAccessAndReturn.lastIndexOf(" "));
 
-			//System.out.println(onlyMethodName);
-			//	System.out.println("\n__________________________________________");
-
 			Method method = new Method();
 			String methodBody = m.group().substring(m.group().indexOf("{"));
 			method.setMethodBody(methodBody);
@@ -164,17 +162,12 @@ th {
 			Matcher matcher = pattern.matcher(methodBody);
 			//set recursive call no and put to method object
 
-			//	 			System.out.println(methodBody + " methooooooooooooooooooooooooooooo");
-
 			if (matcher.find()) {
 
 				//check if method recursive
 				method.setRecursiveCall(true);
-				// 				System.out.println(matcher.group() + " own method call found");
-				// 				System.out.println(matcher.group(1));
 				method.setRecursiveCallNo(matcher.group(1));
 			}
-			//System.out.println(allFileMethods + "\n_________________________________________");
 
 			allFileMethods.put(onlyMethodName + "," + className, method);
 		}
@@ -192,22 +185,10 @@ th {
 		Matcher globalVariables = Pattern.compile("(\\d)+#.+ (.+)=.+;").matcher(removeMetho[0]);
 		while (globalVariables.find()) {
 
-			//System.out.println(globalVariables.group(1) + " Globle variable found");
 			allGlobalVar.put(globalVariables.group(1) + "," + className, globalVariables.group(2));
 		}
 
 			}
-
-			//allProgrammeList.forEach(System.out::println);
-			allFileMethods.entrySet().forEach(method -> {
-		//	System.out.println(method.getValue().getMethodBody() + "\n\n\n");
-			});
-
-			allFileMethods.entrySet().stream().forEach(e -> {
-		System.out.println(e.getKey() + "name       isRecursive " + e.getValue().getMethodBody());
-			});
-
-			//System.out.println(allGlobalVar);
 
 			//individual class file checking	
 
@@ -237,9 +218,11 @@ th {
 		while ((line = br.readLine()) != null) {
 			// process the line.
 			//Add to list for no and codeline
-			list.add(no + "#" + line);
-			out.println(line + "</br>");
-			no++;
+			if (!line.trim().equals("")) {
+		list.add(no + "#" + line);
+		out.println(line + "</br>");
+		no++;
+			}
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -282,7 +265,7 @@ th {
 		regexString = regexString.replace(identifier, ifIdentify);
 	}
 	//replace for  end
-	
+
 	Matcher m = Pattern.compile("((.+\\(.*\\))( )*\\{(\\n|\\r|\\n|.)*?\\})").matcher(regexString);
 	while (m.find()) {
 
@@ -316,6 +299,192 @@ th {
 
 		thisFileMethods.put(onlyMethodName, method);
 	}
+
+	//size taaaaaaaaaaaaaaaabellllllllll starteeeeeeeeeeeeeeeeeeeedddddddddddddddddddddddddddddddddddddddddd
+	for (int x = 0; x < list.size(); x++)
+		regexString += list.get(x) + "\n";
+	%>
+	<h1>Size complexity</h1>
+	<table style="width: 100%">
+		<colgroup>
+			<col style="width: 1%;">
+			<col style="width: 48%;">
+			<col style="width: 1%;">
+
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+
+			<col style="width: 1%;">
+		</colgroup>
+
+
+
+		<!-- Put <thead>, <tbody>, and <tr>'s here! -->
+
+		<!-- CS    -->
+
+		<!-- Nkw  -->
+
+		<!-- Nid    -->
+
+		<!-- Nop  -->
+
+		<!-- Nnv  -->
+
+		<!-- Nsl  -->
+
+
+
+		<tbody>
+			<tr>
+				<th>no</th>
+				<th>Program statements</th>
+
+
+				<th>Nkw</th>
+
+				<th>Nid</th>
+				<th>Nop</th>
+
+				<th>Nnv</th>
+				<th>Nsl</th>
+
+				<th>CS</th>
+
+			</tr>
+			<%
+				//validate size table
+
+			// 				thisFileMethods.entrySet().stream().forEach(e->{
+
+			// 					System.out.println(e.getValue().getMethodBody());
+			// 				});
+
+			for (int i1 = 0; i1 < list.size(); i1++) {
+
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
+
+				//match keywords 
+				//if you find new ones add using |keyword to end inside brakets
+
+				Pattern patternKeyword = Pattern.compile(
+				"(class|public|void|true|else|default|return|null|break|thisabstract|break|catch|class|continue|default|enum|extends|final|finally|implements|import|instanceof|interface|native|new|null|package|private|protected|public|return|static|strictfp|super|synchronized|this|throw|throws|transient|try|void|volatile)");
+				Matcher mKeyWords = patternKeyword.matcher(codeLine[0]);
+				int keyCount = 0;
+				while (mKeyWords.find()) {
+					// replace first number with "number" and second number with the first
+					String identifier = mKeyWords.group();
+					int count = mKeyWords.groupCount();
+					keyCount++;
+
+				}
+
+				//identifier check
+				int identifiers = 0;
+				//this is a method so increment by 1
+				String thisFileMehodAdded = thisFileMethods.keySet().stream().reduce((added, val) -> {
+					return added.trim() + "|" + val.trim();
+				}).get().toString();
+				if (codeLine[0].trim().matches(".*(" + thisFileMehodAdded + ")\\(.*\\)( )*(\\{).*")) {
+					identifiers++;
+				} else {
+					//not a variable and ahs identifiers
+					if (!codeLine[0].trim().matches("(.+)=.+;")) {
+
+				Pattern patternIdentifiers = Pattern.compile(
+						"(?!.*class)(?!.*public)(?!.*for)(?!.*boolean)(?!.*byte)(?!.*char)(?!.*short)(?!.?int)(?!.*long)(?!.*float)(?!.*double)\\b([A-Za-z][A-Za-z0-9_]*)\\b");
+				Matcher mIdentifiers = patternIdentifiers.matcher(codeLine[0]);
+
+				while (mIdentifiers.find()) {
+					identifiers++;
+				}
+
+					}
+
+				}
+
+				//opetaror Check
+				//(--|==|!=|>=|<=|&&>|<|\+\+|\*|\/|%|\+|\||!|\^|~|>>>=|>>>|<<<|<<|>>|\,|->|-|\.|::|\+=|-=|\*=|\/=|=|&=|%=|<<=|>>=|\^=)
+
+				int operators = 0;
+				Pattern patternOperators = Pattern.compile(
+				"(--|==|!=|>=|<=|&&|>|<|\\+\\+|\\*|\\/|%|\\+|\\||!|\\^|~|>>>=|>>>|<<<|<<|>>|\\,|->|-|\\.|::|\\+=|-=|\\*=|\\/=|=|&=|%=|<<=|>>=|\\^=)");
+				Matcher mOperators = patternOperators.matcher(codeLine[0]);
+
+				while (mOperators.find()) {
+					operators++;
+				}
+
+				//check for numaric values
+
+				int numeric = 0;
+				Pattern patternnumeric = Pattern.compile("\\b(\\d+\\.\\d+)\\b|\\b(\\d+)\\b");
+				Matcher mnumeric = patternnumeric.matcher(codeLine[0].split("#")[1]);
+
+				while (mnumeric.find()) {
+
+					numeric++;
+				}
+
+				//check for String literals
+				//\".*?\"
+
+				int stringCount = 0;
+				Pattern patternStringCount = Pattern.compile("\".*?\"");
+				Matcher mpatternStringCount = patternStringCount.matcher(codeLine[0]);
+
+				while (mpatternStringCount.find()) {
+
+					stringCount++;
+				}
+			%>
+
+
+			<tr>
+
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
+
+				<td><%=keyCount%></td>
+
+				<td><%=identifiers%></td>
+
+				<td><%=operators%></td>
+
+				<td><%=numeric%></td>
+
+				<td><%=stringCount%></td>
+				<td><%=keyCount + identifiers + operators + numeric + stringCount%></td>
+
+
+			</tr>
+			<%
+				}
+			%>
+
+
+		</tbody>
+	</table>
+	<br>
+	<br>
+
+
+
+	<%
+		//size taaaaaaaaaaaaaaaabellllllllll endeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+
 	//all methods are added
 
 	//check global vaiables
@@ -329,26 +498,15 @@ th {
 
 	Matcher globalVariables = Pattern.compile("(\\d)+#.+ (.+)=.+;").matcher(removeMetho[0]);
 	while (globalVariables.find()) {
-
-		//	System.out.println(globalVariables.group(1) + " Globle variable found");
 		globalVar.put(globalVariables.group(1), globalVariables.group(2));
 	}
-
-	//System.out.println(removeMetho[0]);
 
 	//find other methods called in this method 
 
 	thisFileMethods.entrySet().stream().forEach((entry) -> {
-		System.out.println("\n\n");
-		// 		System.out.println(entry.getKey() + "  a mwthod in this file");
-		// 		System.out.println(entry.getValue().isRecursiveCall() + " is rec");
-
 		String bodyWithOutMethod = entry.getValue().getMethodBody().replaceAll(entry.getKey(), "");
 		thisFileMethods.entrySet().stream().filter(e -> !e.getKey().equals(entry.getKey())).forEach(methodName -> {
 			//get other method calls from this method	
-			//System.out.println(methodName.getKey());
-			//	System.out.println(bodyWithOutMethod);
-
 			Pattern pattern = Pattern.compile("(\\d*)#.*" + methodName.getKey().trim());
 			Matcher matcher = pattern.matcher(bodyWithOutMethod);
 
@@ -382,8 +540,6 @@ th {
 
 			}
 			System.out.println();
-			System.out.println();
-			System.out.println();
 
 		});
 
@@ -393,7 +549,129 @@ th {
 	System.out.println(normalToRecursive + " normalToRecursive");
 	System.out.println(RecursiveToNormal + " RecursiveToNormal");
 	System.out.println(RecursiveToRecursive + " RecursiveToRecursive");
+
+	//variable complexity taaaaaaaaaaaaaaaabellllllllll starteeeeeeeeeeeeeeeeeeeedddddddddddddddddddddddddddddddddddddddddd
 	%>
+	<h1>Variable complexity</h1>
+	<table style="width: 100%">
+		<colgroup>
+			<col style="width: 1%;">
+			<col style="width: 48%;">
+			<col style="width: 1%;">
+
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+
+
+		</colgroup>
+
+
+
+		<!-- 		Wvs Npdtv Ncdtv Cv  -->
+
+
+
+		<tbody>
+			<tr>
+				<th>no</th>
+				<th>Program statements</th>
+
+
+				<th>Wvs</th>
+
+				<th>Npdtv</th>
+				<th>Ncdtv</th>
+
+				<th>Cv</th>
+
+
+			</tr>
+			<%
+				//validate size table
+
+			// 				thisFileMethods.entrySet().stream().forEach(e->{
+
+			// 					System.out.println(e.getValue().getMethodBody());
+			// 				});
+
+			for (int i1 = 0; i1 < list.size(); i1++) {
+
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
+
+				int scope = 0;
+				//System.out.println(allGlobalVar+"     global var       "+currentClassName);
+
+				final String stupidFinal = currentClassName;
+				Map<String, String> keys = allGlobalVar.entrySet().stream().filter(e -> e.getKey().contains(stupidFinal))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+				//keys.keySet().forEach(System.out::println);
+
+				int scopeType = 0;
+				int primitive = 0;
+				int global = 0;
+
+				if (keys.containsKey(number.trim() + "," + currentClassName) && !codeLine[0].contains("class")) {
+
+					
+
+					if (codeLine[0].matches(".+(byte|short|int|long|float|double|boolean|char).+")) {
+				System.out.println(originalCodeLine + " this is primitive and global");
+				primitive = 1;scopeType = 2;
+					} else {
+				System.out.println(originalCodeLine + "  this is notttttt primitive and global");
+				global = 1;scopeType = 2;
+					}
+
+				} else {
+
+					
+
+					if (codeLine[0].trim().matches("(.+)=.+;")) {
+				if (codeLine[0].matches(".+(byte|short|int|long|float|double|boolean|char).+")) {
+					System.out.println(originalCodeLine + " this is primitive and not global");
+					primitive = 1;scopeType = 1;
+				} else {
+					System.out.println(originalCodeLine + "  this is notttttt primitive and not global");
+					global = 1;scopeType = 1;
+				}
+					}
+				}
+			%>
+
+
+			<tr>
+
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
+
+				<td><%=scopeType%></td>
+
+				<td><%=primitive%></td>
+
+				<td><%=global%></td>
+
+				<td><%= scopeType*((1 * primitive) + (2 * global)) %></td>
+
+
+
+
+			</tr>
+			<%
+				}
+			
+			%>
+
+
+		</tbody>
+	</table>
+	<br>
+	<br>
+
+
+
+
 
 	<table style="width: 100%">
 		<colgroup>
@@ -417,7 +695,7 @@ th {
 			<col style="width: 1%;">
 		</colgroup>
 
-
+		<h1>Coupeling complexity</h1>
 
 		<!-- Put <thead>, <tbody>, and <tr>'s here! -->
 		<tbody>
@@ -472,7 +750,7 @@ th {
 				thisFileMethods.entrySet().forEach(e -> {
 					if (e.getValue().getRecursiveCallNo().equals(number)) {
 				isRecursiveMethod[0] = true;
-				System.out.println(e.getValue().getRecursiveCallNo() + "this line own recursive call happens");
+
 					}
 				});
 
@@ -528,16 +806,12 @@ th {
 					//declare karapu thana magaharinna
 					if (!e.getKey().trim().equals(number)) {
 
-				//if (codeLine.matches("(.*)[ \\(=]*" + e.getValue().trim() + "[ \\)=;](.*)")) 
 				{
-
-					//	System.out.println(codeLine + " line founded   val " + e.getValue().trim());
-
 					int noOfVarInLine = 0;
 					Matcher matcher = Pattern.compile("(.*)[ \\(=+]*(" + e.getValue().trim() + ")[ \\)=;+](.*)")
 							.matcher(codeLine[0]);
 					while (matcher.find()) {
-						//System.out.println(matcher.group(2) + "   varrrrrrrrrrr   " + e.getValue());
+
 						noOfVarInLine++;
 					}
 
@@ -552,65 +826,51 @@ th {
 				boolean[] isGloblalCalledFromRecursive = { false };
 				boolean[] isMethodRecursive = { false };
 
-				//System.out.println(globalVar);
 				thisFileMethods.values().stream().filter(e -> e.isRecursiveCall()).collect(Collectors.toList()).forEach(e -> {
 
 					if (e.getMethodBody().contains(codeLine[0])) {
 				isMethodRecursive[0] = true;
 				if (globelVarUse[0] > 0)
 					isGloblalCalledFromRecursive[0] = true;
-				//System.out.println(codeLine + "  globle in recursive");
+
 					}
 				});
 
 				//check method calling of other file methods
 				allFileMethods.entrySet().stream().forEach(e -> {
-
 					String[] valArray = e.getKey().split(",");
 					if (codeLine[0].contains(valArray[1].trim() + "." + valArray[0].trim())) {
-
-				System.out.println(valArray[1].trim() + "." + valArray[0].trim()
-						+ " otherrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  " + originalCodeLine);
-
 				//is other Method is recursuve
 				if (e.getValue().isRecursiveCall()) {
 					if (isMethodRecursive[0]) {
 						//this file method isRecursive	  
 						//recursive to other method recursive call
-                       RecursiveToOtherRecursiveM[0]=1;
-						
+						RecursiveToOtherRecursiveM[0] = 1;
 					} else {
 						//this file method normal		
 						//normal to other method recursive call
-						   normalToOtherRecursiveM[0]=1;
+						normalToOtherRecursiveM[0] = 1;
 					}
-
 				} else {
 					//is other Method is normal
 					if (isMethodRecursive[0]) {
 						//this file method isRecursive	  
 						//recursive to other method normal call
-                       RecursiveToOtherNormalM[0]=1;
-						
+						RecursiveToOtherNormalM[0] = 1;
 					} else {
 						//this file method normal		
 						//normal to other method normal call
-					    normalToOtherNormalM[0]=1;
+						normalToOtherNormalM[0] = 1;
 					}
 				}
-
 					}
 
 				});
 
-				//System.out.println(globleFromOther[0] + " gloable from tohther errrrrrrrrrrrr " + codeLine);
 				//check is this method recursive and called one
 				if (isGloblalCalledFromRecursive[0]) {
-					//System.out.println("this global from recursive    sssssssssssssssssssssssssssss");
 					globalFromOtherR = globleFromOther[0];
-
 					globalUsedByR = globelVarUse[0];
-
 				} else {
 					globalUsedByNonR = globelVarUse[0];
 					globalFromOtherNonR = globleFromOther[0];
@@ -643,8 +903,10 @@ th {
 				<td><%=globalUsedByR%></td>
 				<td><%=globalFromOtherR%></td>
 
-				<td><%=((isRecursiveMethod[0]) ?2:0)+normalToNormalVal[0]*2+normalToOtherNormalM[0]*3+normalToRecursiveVal[0]*3+normalToOtherRecursiveM[0]*4
-						+RecursiveToRecursiveVal[0]*4+RecursiveToOtherRecursiveM[0]*5+RecursiveToNormalVal[0]*3+RecursiveToOtherNormalM[0]*4+globalUsedByNonR*1+globalFromOtherNonR*2+globalUsedByR*1+globalFromOtherR*2%></td>
+				<td><%=((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 + normalToOtherNormalM[0] * 3
+		+ normalToRecursiveVal[0] * 3 + normalToOtherRecursiveM[0] * 4 + RecursiveToRecursiveVal[0] * 4
+		+ RecursiveToOtherRecursiveM[0] * 5 + RecursiveToNormalVal[0] * 3 + RecursiveToOtherNormalM[0] * 4
+		+ globalUsedByNonR * 1 + globalFromOtherNonR * 2 + globalUsedByR * 1 + globalFromOtherR * 2%></td>
 
 
 
@@ -659,8 +921,9 @@ th {
 	<%
 		}
 
+	fileList = new ArrayList();
 	} catch (Exception ex) {
-		System.out.println(ex);
+		ex.printStackTrace();
 	}
 
 	//file ekak naththm output eka
