@@ -243,6 +243,12 @@ th {
 	//Finding  methods
 	//Map designed with method name and method body
 	Map<String, Method> thisFileMethods = new HashMap();
+	Map<String, Integer> table1 = new HashMap();
+	Map<String, Integer> table2 = new HashMap();
+	Map<String, Integer> table3 = new HashMap();
+	Map<String, Integer> table4 = new HashMap();
+	Map<String, Integer> table5 = new HashMap();
+	Map<String, Integer> table6 = new HashMap();
 
 	//replace if } with +if to resolve complexity
 	Pattern p = Pattern.compile("if( )*\\((.)*\\)( )*\\{(.|\\n)*?(\\d+#.*})");
@@ -301,8 +307,8 @@ th {
 	}
 
 	//size taaaaaaaaaaaaaaaabellllllllll starteeeeeeeeeeeeeeeeeeeedddddddddddddddddddddddddddddddddddddddddd
-	for (int x = 0; x < list.size(); x++)
-		regexString += list.get(x) + "\n";
+	// 	for (int x = 0; x < list.size(); x++)
+	// 		regexString += list.get(x) + "\n";
 	%>
 	<h1>Size complexity</h1>
 	<table style="width: 100%">
@@ -466,6 +472,9 @@ th {
 				<td><%=numeric%></td>
 
 				<td><%=stringCount%></td>
+				<%
+					table1.put(number, (keyCount + identifiers + operators + numeric + stringCount));
+				%>
 				<td><%=keyCount + identifiers + operators + numeric + stringCount%></td>
 
 
@@ -652,6 +661,10 @@ th {
 
 				<td><%=global%></td>
 
+				<%
+					table2.put(number, scopeType * ((1 * primitive) + (2 * global)));
+				%>
+
 				<td><%=scopeType * ((1 * primitive) + (2 * global))%></td>
 
 
@@ -766,6 +779,10 @@ th {
 				<td><%=returnTypePorO%></td>
 				<td><%=isPrimitive%></td>
 				<td><%=isComposite%></td>
+				<%
+					table3.put(number, returnTypePorO + (1 * isPrimitive) + (2 * isComposite));
+				%>
+
 				<td><%=returnTypePorO + (1 * isPrimitive) + (2 * isComposite)%></td>
 			</tr>
 			<%
@@ -1007,6 +1024,12 @@ th {
 				<td><%=globalUsedByR%></td>
 				<td><%=globalFromOtherR%></td>
 
+	<%
+					table5.put(number, ((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 + normalToOtherNormalM[0] * 3
+							+ normalToRecursiveVal[0] * 3 + normalToOtherRecursiveM[0] * 4 + RecursiveToRecursiveVal[0] * 4
+							+ RecursiveToOtherRecursiveM[0] * 5 + RecursiveToNormalVal[0] * 3 + RecursiveToOtherNormalM[0] * 4
+							+ globalUsedByNonR * 1 + globalFromOtherNonR * 2 + globalUsedByR * 1 + globalFromOtherR * 2);
+				%>
 				<td><%=((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 + normalToOtherNormalM[0] * 3
 		+ normalToRecursiveVal[0] * 3 + normalToOtherRecursiveM[0] * 4 + RecursiveToRecursiveVal[0] * 4
 		+ RecursiveToOtherRecursiveM[0] * 5 + RecursiveToNormalVal[0] * 3 + RecursiveToOtherNormalM[0] * 4
@@ -1070,7 +1093,7 @@ th {
 
 				int typeOfStructure = 0;
 				int noOfConditions = 0;
-				 int previouse=0;
+				int previouse = 0;
 				Matcher controleTypes = Pattern.compile("(for|if|switch|case|while)( )*(\\((.*)\\)|.*\\:)")
 				.matcher(originalCodeLine);
 
@@ -1078,46 +1101,45 @@ th {
 
 					String type = controleTypes.group(1);
 					System.out.println(type + " typeeeeeeeeee " + originalCodeLine);
-                   
+
 					String conditions = controleTypes.group(3);
-					
+
 					switch (type) {
 
 					case "for":
-				if(outermost!=0){previouse=3;}
-					outermost++;
-						typeOfStructure = 3;
+				if (outermost != 0) {
+					previouse = 3;
+				}
+				outermost++;
+				typeOfStructure = 3;
 				break;
 
 					case "while":
-						typeOfStructure = 3;
-						break;
+				typeOfStructure = 3;
+				break;
 
 					case "if":
-						typeOfStructure = 2;
-						break;
+				typeOfStructure = 2;
+				break;
 
 					case "switch":
-						typeOfStructure = 2;
-						break;
+				typeOfStructure = 2;
+				break;
 
 					case "case":
-						typeOfStructure = 1;
-						break;
+				typeOfStructure = 1;
+				break;
 
 					}
 
-                     
-					
-					Matcher conditionSet=Pattern.compile("(==|!=|<=|>=|>|<)").matcher(conditions);
-					while(conditionSet.find()){
-						System.out.println(conditionSet.group(1) + " condition");
-						noOfConditions++;
+					Matcher conditionSet = Pattern.compile("(==|!=|<=|>=|>|<)").matcher(conditions);
+					while (conditionSet.find()) {
+				System.out.println(conditionSet.group(1) + " condition");
+				noOfConditions++;
 					}
-					
-					
-					System.out.println("structureeeeeeeeeeeeeeee    "+typeOfStructure+"\n\n\n");
-					
+
+					System.out.println("structureeeeeeeeeeeeeeee    " + typeOfStructure + "\n\n\n");
+
 				}
 			%>
 
@@ -1132,8 +1154,11 @@ th {
 				<td><%=noOfConditions%></td>
 
 				<td><%=previouse%></td>
+				<%
+					table6.put(number, (typeOfStructure * noOfConditions) + previouse);
+				%>
 
-				<td><%= (typeOfStructure * noOfConditions) + previouse %></td>
+				<td><%=(typeOfStructure * noOfConditions) + previouse%></td>
 
 
 
@@ -1142,6 +1167,239 @@ th {
 			<%
 				}
 			%>
+		</tbody>
+	</table>
+	<br>
+	<br>
+
+	<h1>complexity of a program due to Inheritance</h1>
+	<table style="width: 100%">
+		<colgroup>
+			<col style="width: 1%;">
+			<col style="width: 48%;">
+
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+			<col style="width: 10%;">
+
+		</colgroup>
+
+
+
+		<!-- 	Cs Cv Cm Ci Ccp Ccs TCps    -->
+
+
+
+		<tbody>
+			<tr>
+				<th>no</th>
+				<th>Program statements</th>
+
+
+
+				<th>Ci</th>
+
+
+
+			</tr>
+			<%!public String getMapping(String className, Map<String, String> classesAndData) {
+
+		Matcher extendedClass = Pattern.compile(".*extends( )+(.+)").matcher(className);
+		String fullClassMap = className;
+		if (extendedClass.find()) {
+
+			//	System.out.println(classesAndData.get(extendedClass.group(2).trim()).equals("")+"          dsssssssssssssssssss");
+
+			if (classesAndData.get(extendedClass.group(2).trim()).equals("")) {
+				fullClassMap = fullClassMap + "null";
+			} else {
+				fullClassMap += classesAndData.get(extendedClass.group(2).trim());
+
+			}
+
+		}
+
+		return fullClassMap;
+	}%>
+
+			<%
+				Map<String, String> classesAndData = new LinkedHashMap();
+
+			Matcher classes = Pattern.compile("class( )+(.+)\\{").matcher(regexString);
+
+			while (classes.find()) {
+				String className = classes.group(2);
+				if (className.contains("extends")) {
+					classesAndData.put(className.substring(0, className.indexOf("extends")).trim(), className);
+				} else {
+
+					classesAndData.put(className, "");
+				}
+			}
+
+			for (int i1 = 0; i1 < list.size(); i1++) {
+
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
+
+				int classScore = 0;
+
+				Matcher matchAgain = Pattern.compile("class( )+(.+)\\{").matcher(originalCodeLine);
+
+				while (matchAgain.find()) {
+					String className = matchAgain.group(2);
+
+					if (originalCodeLine.contains("extends")) {
+				String lastExtend = className.substring(className.indexOf("extends"));
+
+				String fullClassMap = className;
+
+				Matcher extendedClass = Pattern.compile("extends( )+(.+)").matcher(className);
+				if (extendedClass.find()) {
+					// 					fullClassMap += classesAndData.get(extendedClass.group(2).trim());
+					// 					System.out.println(fullClassMap + "  data addddddddddddddddddddddddddddddddddddddddddded "
+					// 							+ classesAndData.get(extendedClass.group(2).trim()));
+
+					while (!fullClassMap.contains("null")) {
+
+						fullClassMap = getMapping(fullClassMap, classesAndData);
+
+					}
+
+					Matcher countOfExtend = Pattern.compile("extends").matcher(fullClassMap);
+					while (countOfExtend.find()) {
+						System.out.println(fullClassMap.replaceAll("null", "") + "  data Map Generated count "
+								+ countOfExtend.group());
+						classScore++;
+					}
+
+				}
+
+					} else {
+				System.out.println(className + "  data addddddddddddddddddddddddddddddddddddddddddded " + originalCodeLine);
+
+				classScore = 0;
+					}
+				}
+				
+				if(classScore>4){classScore=4;}
+			%>
+
+
+			<tr>
+
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
+				<%
+					table4.put(number, classScore);
+				%>
+
+				<td><%=classScore%></td>
+
+
+
+
+
+
+			</tr>
+			<%
+				}
+			%>
+		</tbody>
+	</table>
+	<br>
+	<br>
+
+
+
+
+
+
+	<h1>complexity of a program due to all the factors</h1>
+	<table style="width: 100%">
+		<colgroup>
+			<col style="width: 1%;">
+			<col style="width: 48%;">
+
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+
+			<col style="width: 6%;">
+			<col style="width: 6%;">
+			<col style="width: 10%;">
+
+		</colgroup>
+
+
+
+		<!-- 	Cs Cv Cm Ci Ccp Ccs TCps    -->
+
+
+
+		<tbody>
+			<tr>
+				<th>no</th>
+				<th>Program statements</th>
+
+
+				<th>Cs</th>
+
+				<th>Cv</th>
+				<th>Cm</th>
+
+				<th>Ci</th>
+
+				<th>Ccp</th>
+				<th>Ccs</th>
+				<th>Tcps</th>
+
+			</tr>
+
+
+			<%
+				for (int i1 = 0; i1 < list.size(); i1++) {
+
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
+			%>
+
+
+			<tr>
+
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
+
+				<td><%=table1.get(number)%></td>
+
+				<td><%=table2.get(number)%></td>
+
+				<td><%=table3.get(number)%></td>
+
+				<td><%=table4.get(number)%></td>
+				<td><%=table5.get(number)%></td>
+
+				<td><%=table6.get(number)%></td>
+
+				<td><%=table1.get(number)+table2.get(number)+table3.get(number)+table4.get(number)+table5.get(number)+table6.get(number)%></td>
+
+
+
+
+			</tr>
+			<%
+				}
+			%>
+			
+	
 		</tbody>
 	</table>
 	<br>

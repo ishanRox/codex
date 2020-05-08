@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class A {
+public class A  {
 	double num = 0.0;
 	int x1 = 123;
 static	int x2 = 456;
