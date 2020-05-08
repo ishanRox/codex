@@ -1022,11 +1022,136 @@ th {
 		</tbody>
 	</table>
 
+
+	<h1>complexity of a program due to control structures</h1>
+	<table style="width: 100%">
+		<colgroup>
+			<col style="width: 1%;">
+			<col style="width: 48%;">
+			<col style="width: 1%;">
+
+			<col style="width: 4%;">
+			<col style="width: 4%;">
+
+
+		</colgroup>
+
+
+
+		<!-- 		Wtcs NC Ccspps Ccs   -->
+
+
+
+		<tbody>
+			<tr>
+				<th>no</th>
+				<th>Program statements</th>
+
+
+				<th>Wtcs</th>
+
+				<th>NC</th>
+				<th>Ccspps</th>
+
+				<th>Ccs</th>
+
+
+			</tr>
+
+
+			<%
+				int outermost = 0;
+
+			for (int i1 = 0; i1 < list.size(); i1++) {
+
+				String originalCodeLine = list.get(i1).toString();
+				String codeLine[] = { list.get(i1).toString() };
+				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
+
+				int typeOfStructure = 0;
+				int noOfConditions = 0;
+				 int previouse=0;
+				Matcher controleTypes = Pattern.compile("(for|if|switch|case|while)( )*(\\((.*)\\)|.*\\:)")
+				.matcher(originalCodeLine);
+
+				while (controleTypes.find()) {
+
+					String type = controleTypes.group(1);
+					System.out.println(type + " typeeeeeeeeee " + originalCodeLine);
+                   
+					String conditions = controleTypes.group(3);
+					
+					switch (type) {
+
+					case "for":
+				if(outermost!=0){previouse=3;}
+					outermost++;
+						typeOfStructure = 3;
+				break;
+
+					case "while":
+						typeOfStructure = 3;
+						break;
+
+					case "if":
+						typeOfStructure = 2;
+						break;
+
+					case "switch":
+						typeOfStructure = 2;
+						break;
+
+					case "case":
+						typeOfStructure = 1;
+						break;
+
+					}
+
+                     
+					
+					Matcher conditionSet=Pattern.compile("(==|!=|<=|>=|>|<)").matcher(conditions);
+					while(conditionSet.find()){
+						System.out.println(conditionSet.group(1) + " condition");
+						noOfConditions++;
+					}
+					
+					
+					System.out.println("structureeeeeeeeeeeeeeee    "+typeOfStructure+"\n\n\n");
+					
+				}
+			%>
+
+
+			<tr>
+
+				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
+				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
+
+				<td><%=typeOfStructure%></td>
+
+				<td><%=noOfConditions%></td>
+
+				<td><%=previouse%></td>
+
+				<td><%= (typeOfStructure * noOfConditions) + previouse %></td>
+
+
+
+
+			</tr>
+			<%
+				}
+			%>
+		</tbody>
+	</table>
+	<br>
+	<br>
+
 	<%
 		}
 
-	} catch (Exception ex) {
-		ex.printStackTrace();
+	} catch (Exception exc) {
+		exc.printStackTrace();
 	}
 
 	//file ekak naththm output eka
