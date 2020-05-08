@@ -1024,11 +1024,12 @@ th {
 				<td><%=globalUsedByR%></td>
 				<td><%=globalFromOtherR%></td>
 
-	<%
-					table5.put(number, ((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 + normalToOtherNormalM[0] * 3
-							+ normalToRecursiveVal[0] * 3 + normalToOtherRecursiveM[0] * 4 + RecursiveToRecursiveVal[0] * 4
-							+ RecursiveToOtherRecursiveM[0] * 5 + RecursiveToNormalVal[0] * 3 + RecursiveToOtherNormalM[0] * 4
-							+ globalUsedByNonR * 1 + globalFromOtherNonR * 2 + globalUsedByR * 1 + globalFromOtherR * 2);
+				<%
+					table5.put(number,
+						((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 + normalToOtherNormalM[0] * 3
+						+ normalToRecursiveVal[0] * 3 + normalToOtherRecursiveM[0] * 4 + RecursiveToRecursiveVal[0] * 4
+						+ RecursiveToOtherRecursiveM[0] * 5 + RecursiveToNormalVal[0] * 3 + RecursiveToOtherNormalM[0] * 4
+						+ globalUsedByNonR * 1 + globalFromOtherNonR * 2 + globalUsedByR * 1 + globalFromOtherR * 2);
 				%>
 				<td><%=((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 + normalToOtherNormalM[0] * 3
 		+ normalToRecursiveVal[0] * 3 + normalToOtherRecursiveM[0] * 4 + RecursiveToRecursiveVal[0] * 4
@@ -1287,8 +1288,10 @@ th {
 				classScore = 0;
 					}
 				}
-				
-				if(classScore>4){classScore=4;}
+
+				if (classScore > 4) {
+					classScore = 4;
+				}
 			%>
 
 
@@ -1389,7 +1392,8 @@ th {
 
 				<td><%=table6.get(number)%></td>
 
-				<td><%=table1.get(number)+table2.get(number)+table3.get(number)+table4.get(number)+table5.get(number)+table6.get(number)%></td>
+				<td><%=table1.get(number) + table2.get(number) + table3.get(number) + table4.get(number) + table5.get(number)
+		+ table6.get(number)%></td>
 
 
 
@@ -1398,8 +1402,28 @@ th {
 			<%
 				}
 			%>
-			
-	
+			<tr>
+
+				
+				<td colspan="2"><center><strong>Total</strong></center></td>
+				<td><%=table1.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
+				<td><%=table2.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
+				<td><%=table3.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
+				<td><%=table4.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
+				<td><%=table5.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
+				<td><%=table6.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
+				<td><%=table1.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+				+table2.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+				+table3.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+				+table4.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+				+table5.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+				+table6.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+				%></td>
+
+
+
+			</tr>
+
 		</tbody>
 	</table>
 	<br>
