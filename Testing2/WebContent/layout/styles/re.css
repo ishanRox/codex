@@ -1,0 +1,77 @@
+body
+{
+	font-family: Tahomahoma, Geneva, sans-serif;
+	color: #fff;
+	background: url("image/LO.JPEG")no-repeat;
+}
+
+a
+{
+	color:#3AAFA9;
+	text-decoration: blink;
+	font-family: Tahomahoma, Geneva, sans-serif;
+	margin-left: 35px;
+}
+.reset
+{
+	background:rgba(44,62,80,0.7);
+	padding: 40px;
+	width: 240px;
+	height: 340px;
+	margin-left: 180px;
+	margin: auto;
+	margin-top: 120px;
+}
+h2
+{
+	margin-top: 15px;
+	margin-left: 10px;
+}
+input[type=password]
+{
+	width: 240px;
+	text-align: center;
+	background: transparent;
+	border-bottom: 0.1px solid #fff;
+	font-family: `play`, sans-serif;
+	font-size: 16px;
+	font-weight: 200px;
+	padding: 10px 0;
+	transition: border 0.5s;
+	outline: none;
+	color: #2B7A78;
+}
+
+input[type=button]
+{
+	border: none;
+	background: none;
+	color: #3AAFA9;
+	font-size: 16px;
+	line-height: 25px;
+	padding: 10px 0;
+	border-radius: 12px;
+	cursor: pointer;
+	width: 180px;
+	margin-left: 30px;
+	background-color: black;
+}
+}
+
+input[type=button]:hover
+{
+	color: #fff;
+	background-color: black;
+}
+
+.container
+{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+::placeholder
+{
+	color: aliceblue;
+	opacity: 0.8; /* firefox */
+}
