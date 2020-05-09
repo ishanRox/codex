@@ -1194,7 +1194,12 @@ th {
 
 		<!-- 	Cs Cv Cm Ci Ccp Ccs TCps    -->
 
-
+		<!-- Count Class Name No of direct inheritances -->
+		<!--  (Ndi) -->
+		<!-- No of indirect inheritances -->
+		<!-- (Nidi) -->
+		<!-- Total inheritances -->
+		<!-- (Ti) Ci -->
 
 		<tbody>
 			<tr>
@@ -1203,8 +1208,12 @@ th {
 
 
 
+				<th>Count</th>
+				<th>Class Name</th>
+				<th>No of direct inheritances</th>
+				<th>No of indirect inheritances</th>
+				<th>Total inheritances</th>
 				<th>Ci</th>
-
 
 
 			</tr>
@@ -1250,23 +1259,27 @@ th {
 				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
 
 				int classScore = 0;
-
+                int direct=0;
+                int inDirect=0;
+				String classNameCol="";
+				
 				Matcher matchAgain = Pattern.compile("class( )+(.+)\\{").matcher(originalCodeLine);
 
 				while (matchAgain.find()) {
 					String className = matchAgain.group(2);
 
+					
 					if (originalCodeLine.contains("extends")) {
+						
+					direct=1;
+					
 				String lastExtend = className.substring(className.indexOf("extends"));
-
 				String fullClassMap = className;
-
+				System.out.println(className.split("extends")[0]+"2111111111111111111111111111111111111");
+				classNameCol=className.split("extends")[0];
 				Matcher extendedClass = Pattern.compile("extends( )+(.+)").matcher(className);
 				if (extendedClass.find()) {
-					// 					fullClassMap += classesAndData.get(extendedClass.group(2).trim());
-					// 					System.out.println(fullClassMap + "  data addddddddddddddddddddddddddddddddddddddddddded "
-					// 							+ classesAndData.get(extendedClass.group(2).trim()));
-
+					
 					while (!fullClassMap.contains("null")) {
 
 						fullClassMap = getMapping(fullClassMap, classesAndData);
@@ -1283,8 +1296,8 @@ th {
 				}
 
 					} else {
-				System.out.println(className + "  data addddddddddddddddddddddddddddddddddddddddddded " + originalCodeLine);
-
+						System.out.println(className+"2111111111111111111111111111111111111");
+						classNameCol=className;
 				classScore = 0;
 					}
 				}
@@ -1303,6 +1316,11 @@ th {
 					table4.put(number, classScore);
 				%>
 
+				<td><%=number%></td>
+				<td><%=classNameCol%></td>
+				<td><%=direct%></td>
+				<td><%=classScore-direct%></td>
+				<td><%=classScore%></td>
 				<td><%=classScore%></td>
 
 
@@ -1404,8 +1422,10 @@ th {
 			%>
 			<tr>
 
-				
-				<td colspan="2"><center><strong>Total</strong></center></td>
+
+				<td colspan="2"><center>
+						<strong>Total</strong>
+					</center></td>
 				<td><%=table1.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
 				<td><%=table2.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
 				<td><%=table3.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
@@ -1413,12 +1433,11 @@ th {
 				<td><%=table5.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
 				<td><%=table6.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
 				<td><%=table1.values().stream().reduce((value, tot) -> value + tot).get().intValue()
-				+table2.values().stream().reduce((value, tot) -> value + tot).get().intValue()
-				+table3.values().stream().reduce((value, tot) -> value + tot).get().intValue()
-				+table4.values().stream().reduce((value, tot) -> value + tot).get().intValue()
-				+table5.values().stream().reduce((value, tot) -> value + tot).get().intValue()
-				+table6.values().stream().reduce((value, tot) -> value + tot).get().intValue()
-				%></td>
+		+ table2.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+		+ table3.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+		+ table4.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+		+ table5.values().stream().reduce((value, tot) -> value + tot).get().intValue()
+		+ table6.values().stream().reduce((value, tot) -> value + tot).get().intValue()%></td>
 
 
 
