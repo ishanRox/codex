@@ -1258,6 +1258,7 @@ th {
 				String codeLine[] = { list.get(i1).toString() };
 				String number = codeLine[0].substring(0, codeLine[0].indexOf("#"));
 
+				int ci=0;
 				int classScore = 0;
                 int direct=0;
                 int inDirect=0;
@@ -1305,6 +1306,11 @@ th {
 				if (classScore > 4) {
 					classScore = 4;
 				}
+				
+				for(int x=1;x<=classScore;x++){
+					ci+=x;
+				}
+				
 			%>
 
 
@@ -1321,7 +1327,7 @@ th {
 				<td><%=direct%></td>
 				<td><%=classScore-direct%></td>
 				<td><%=classScore%></td>
-				<td><%=classScore%></td>
+				<td><%=ci%></td>
 
 
 
