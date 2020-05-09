@@ -316,6 +316,10 @@
 		for (int x = 0; x < allProgrammeList.size(); x++)
 			regexString += allProgrammeList.get(x) + "\n";
 
+		ServletContext sc = getServletContext();
+		  sc.setAttribute("attribute", regexString);
+	//	  this.getServletConfig().getServletContext().setAttribute("sharedId", shared); // add to application context
+		   
 		String className = "";
 
 		Matcher classF = Pattern.compile("class (.*)( )*\\{").matcher(regexString);
@@ -1246,6 +1250,9 @@
 			</tr>
 			<%
 				}
+			System.out.println(table5.values());
+			ServletContext sc = getServletContext();
+			  sc.setAttribute("attribute1", table5);
 			%>
 
 		</tbody>
@@ -1517,6 +1524,7 @@
 
 			</tr>
 			<%
+		
 				}
 			%>
 		</tbody>

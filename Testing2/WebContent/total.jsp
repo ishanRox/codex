@@ -1,3 +1,8 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -77,28 +82,48 @@
 			<th>Ccs</th>
 			<th>TCps</th>
 		</tr>
+		
+		<% 
+		
+String regex=		(String)this.getServletConfig().getServletContext().getAttribute("attribute");
+	
+		Map<String, Integer> table5=		(HashMap)this.getServletConfig().getServletContext().getAttribute("attribute1");
+				
+		System.out.println(table5);
+		List list =	Arrays.asList(regex.split("\n"));
+		
+	for(int i=0;i<list.size();i++){
+		
+		%>
 		<tr>
-			<td>1</td>
-			<td>2</td>
-			<td>3</td>
-			<td>4</td>
-			<td>5</td>
-			<td>6</td>
-			<td>7</td>
+			<td><%= list.get(i).toString().split("#")[0]%></td>
+			<td><%=list.get(i).toString().split("#")[1] %></td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td><%=table5.get( list.get(i).toString().split("#")[0])%></td>
 			<td>8</td>
 			<th>9</th>
 		</tr>
+		
+		
+		<%
+		
+		}
+		%>
 		<tr>
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
-			<th>-</th>
+			<td></td>
+			<td> </td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td><%=table5.values().stream().reduce((t,v)->t+v).get().intValue()%></td>
+			<td>8</td>
+			<th>9</th>
 		</tr>
+		
 	</table>
 		</footer>
 		</article> 
