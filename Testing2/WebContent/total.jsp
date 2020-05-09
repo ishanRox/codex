@@ -103,8 +103,8 @@ String regex=		(String)this.getServletConfig().getServletContext().getAttribute(
 			<td>0</td>
 			<td>0</td>
 			<td><%=table5.get( list.get(i).toString().split("#")[0])%></td>
-			<td>8</td>
-			<th>9</th>
+			<td>0</td>
+			<th>0</th>
 		</tr>
 		
 		
@@ -120,8 +120,8 @@ String regex=		(String)this.getServletConfig().getServletContext().getAttribute(
 			<td></td>
 			<td>Total</td>
 			<td><%=table5.values().stream().reduce((t,v)->t+v).get().intValue()%></td>
-			<td>8</td>
-			<th>9</th>
+			<td>0</td>
+			<th>0</th>
 		</tr>
 		
 	</table>

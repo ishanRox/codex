@@ -237,8 +237,7 @@
 	List<File> fileList = new ArrayList();
 
 	String contentType = request.getContentType();
-	if ((contentType.indexOf("multipart/form-data") >= 0)) {
-
+	 if ((contentType!=null)&&(contentType.indexOf("multipart/form-data") >= 0)) {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(maxMemSize);
 		//  factory.setRepository(new File("c:\\text"));
