@@ -8,6 +8,7 @@ package itpm_coupling;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import model.Method;
 
 /**
@@ -27,6 +30,8 @@ import model.Method;
  */
 public class Coupling_table extends javax.swing.JFrame {
 
+	public static List <Integer>  defaultWeight= Arrays.asList(2,2,3,3,4,4,5,3,4,1,2,1,2);
+	
 	/**
 	 * Creates new form Coupling_table
 	 */
@@ -369,11 +374,11 @@ System.out.println(number+" Codeline  "+((isRecursiveMethod[0]) ? 2 : 0) +"1 "+ 
 						RecursiveToRecursiveVal[0], "0", RecursiveToNormalVal[0], "0", globalUsedByNonR, "0",
 						globalUsedByR, "0",
 						
-						((isRecursiveMethod[0]) ? 2 : 0) + normalToNormalVal[0] * 2 
-								+ normalToRecursiveVal[0] * 3 
-								+ RecursiveToRecursiveVal[0] * 4 
-								+ RecursiveToNormalVal[0] * 3 + globalUsedByNonR * 1
-								+ globalUsedByR * 1 
+						((isRecursiveMethod[0]) ? Coupling_table.defaultWeight.get(0) : 0) + normalToNormalVal[0] * Coupling_table.defaultWeight.get(1)
+						+ normalToRecursiveVal[0] * Coupling_table.defaultWeight.get(3) 
+						+ RecursiveToRecursiveVal[0] * Coupling_table.defaultWeight.get(5) 
+						+ RecursiveToNormalVal[0] *  Coupling_table.defaultWeight.get(7)  + globalUsedByNonR *  Coupling_table.defaultWeight.get(9) 
+						+ globalUsedByR *  Coupling_table.defaultWeight.get(11) 
 
 				});
 			}

@@ -5,6 +5,9 @@
  */
 package itpm_coupling;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import itpm_coupling.Coupling_table;
 
 /**
@@ -61,13 +64,15 @@ public class Coupling_weight extends javax.swing.JFrame {
         jTextField12 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-
+    
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setText("Weights related to the coupling factor");
+      
+
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabel1.setText("Coupling Type");
@@ -114,6 +119,48 @@ public class Coupling_weight extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel16.setText("A recursive method referencing a global variable in a different file ");
 
+        
+        
+        jTextField1.setText(Coupling_table.defaultWeight.get(2)+"");
+        jTextField2.setText(Coupling_table.defaultWeight.get(3)+"");
+        jTextField3.setText(Coupling_table.defaultWeight.get(4)+"");
+        jTextField4.setText(Coupling_table.defaultWeight.get(5)+"");
+        jTextField5.setText(Coupling_table.defaultWeight.get(6)+"");
+        jTextField6.setText(Coupling_table.defaultWeight.get(7)+"");
+        jTextField7.setText(Coupling_table.defaultWeight.get(8)+"");
+        jTextField8.setText(Coupling_table.defaultWeight.get(9)+"");
+        jTextField9.setText(Coupling_table.defaultWeight.get(10)+"");
+        jTextField10.setText(Coupling_table.defaultWeight.get(11)+"");
+        jTextField11.setText(Coupling_table.defaultWeight.get(12)+"");
+        jTextField12.setText(Coupling_table.defaultWeight.get(1)+"");
+        jTextField13.setText(Coupling_table.defaultWeight.get(0)+"");
+        
+        jTextField1.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getKeyChar());
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				  String    outcome =jTextField1.getText();
+				  Coupling_table.defaultWeight.set(2, 123);
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		
+        });
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -232,9 +279,41 @@ public class Coupling_weight extends javax.swing.JFrame {
         jButton2.setText("Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                
+            	Coupling_table.defaultWeight.set(2,Integer.parseInt(jTextField1.getText()));
+            	Coupling_table.defaultWeight.set(3,Integer.parseInt(jTextField2.getText()));
+            	Coupling_table.defaultWeight.set(4,Integer.parseInt(jTextField3.getText()));
+            	Coupling_table.defaultWeight.set(5,Integer.parseInt(jTextField4.getText()));
+            	Coupling_table.defaultWeight.set(6,Integer.parseInt(jTextField5.getText()));
+            	Coupling_table.defaultWeight.set(7,Integer.parseInt(jTextField6.getText()));
+            	Coupling_table.defaultWeight.set(8,Integer.parseInt(jTextField7.getText()));
+            	Coupling_table.defaultWeight.set(9,Integer.parseInt(jTextField8.getText()));
+            	Coupling_table.defaultWeight.set(10,Integer.parseInt(jTextField9.getText()));
+            	Coupling_table.defaultWeight.set(11,Integer.parseInt(jTextField10.getText()));
+            	Coupling_table.defaultWeight.set(12,Integer.parseInt(jTextField11.getText()));
+            	Coupling_table.defaultWeight.set(1,Integer.parseInt(jTextField12.getText()));
+            	Coupling_table.defaultWeight.set(0,Integer.parseInt(jTextField13.getText()));
+            	
+            	System.out.println(Coupling_table.defaultWeight);
+            	
+                   jTextField2.setText(Coupling_table.defaultWeight.get(3)+"");
+                   jTextField3.setText(Coupling_table.defaultWeight.get(4)+"");
+                   jTextField4.setText(Coupling_table.defaultWeight.get(5)+"");
+                   jTextField5.setText(Coupling_table.defaultWeight.get(6)+"");
+                   jTextField6.setText(Coupling_table.defaultWeight.get(7)+"");
+                   jTextField7.setText(Coupling_table.defaultWeight.get(8)+"");
+                   jTextField8.setText(Coupling_table.defaultWeight.get(9)+"");
+                   jTextField9.setText(Coupling_table.defaultWeight.get(10)+"");
+                   jTextField10.setText(Coupling_table.defaultWeight.get(11)+"");
+                   jTextField11.setText(Coupling_table.defaultWeight.get(12)+"");
+                   jTextField12.setText(Coupling_table.defaultWeight.get(1)+"");
+                   jTextField13.setText(Coupling_table.defaultWeight.get(0)+"");
+            	
+            	jButton2ActionPerformed(evt);   
             }
         });
+        
+      
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
