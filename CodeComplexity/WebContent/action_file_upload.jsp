@@ -63,7 +63,7 @@ th {
 			
 			%>
 			
-				<button type="button" onclick="show(); showAll();">All complexity Table </button>	
+				<button type="button" onclick="show(); showAll(); ">All complexity Table </button>	
 			
 				<button type="button" onclick="show(); showControle();">All complexity Table</button>
 				
@@ -78,11 +78,11 @@ th {
 			
 			<script>
 			
-			[...document.querySelectorAll("div.show")].forEach(e=>e.hidden=true);
+		//	[...document.querySelectorAll("div.show")].forEach(e=>e.hidden=true);
 			
 			function show() {
-alert("okkkkk");
-				[...document.querySelectorAll("div.show")].forEach(e=>e.hidden=false);
+             alert("okkkkk");
+				[...document.querySelectorAll("div.size")].forEach(e=>e.hidden=false);
 					
 			}
 			
@@ -109,7 +109,7 @@ alert("okkkkk");
 			}
 			
 			function showSize() {
-				[...document.querySelectorAll("table.size")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
 			}
 			
 			
@@ -371,7 +371,7 @@ alert("okkkkk");
 	
 	<div class="size" hidden>
 	
-	<table style="width: 100%">
+	<table class="show" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
