@@ -65,16 +65,18 @@ th {
 			
 				<button type="button" onclick="show(); showAll(); ">All complexity Table </button>	
 			
-				<button type="button" onclick="show(); showControle();">All complexity Table</button>
+				<button type="button" onclick="show(); showControle();">Controle Structure complexity Table</button>
 				
-				<button type="button" onclick="show(); showCouple();">All complexity Table</button>
+				<button type="button" onclick="show(); showCouple();">Method complexity Table</button>
+				
+				<button type="button" onclick="show(); showCoupleComplex();">showCouple complexity Table</button>
 				
 				
-				<button type="button" onclick="show(); showInhe();">All complexity Table</button>
+				<button type="button" onclick="show(); showInhe();">Inheritance complexity Table</button>
 				
-				<button type="button" onclick="show(); showVar();">All complexity Table</button>
+				<button type="button" onclick="show(); showVar();">Variable complexity Table</button>
 				
-				<button type="button" onclick="show(); showSize();">All complexity Table</button>
+				<button type="button" onclick="show(); showSize();">Size complexity Table</button>
 			
 			<script>
 			
@@ -87,29 +89,89 @@ th {
 			}
 			
 			function showAll() {
-				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=false);
+				
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
+				
+				
 			}
 			
 			function showControle() {
-				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=false);
+				
+				
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
 			}
 			
 			function showCouple() {
-				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=false);
+				
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
 			}
 			
+			function showCoupleComplex() {
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=false);
+				
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
+			}
 			
 			function showInhe() {
-				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=false);
+				
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
 			}
 			
 			
 			function showVar() {
-				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=false);
+	
+
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=true);
+				
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
+	
 			}
 			
 			function showSize() {
-				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.show")].forEach(e=>e.hidden=false);
+				
+				
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.couple")].forEach(e=>e.hidden=true);
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
 			}
 			
 			
