@@ -60,6 +60,61 @@ th {
 			List fileItems = upload.parseRequest(request);
 			Iterator i = fileItems.iterator();
 			out.println("<h1>All Files Complexity </h1>");
+			
+			%>
+			
+				<button type="button" onclick="show(); showAll();">All complexity Table </button>	
+			
+				<button type="button" onclick="show(); showControle();">All complexity Table</button>
+				
+				<button type="button" onclick="show(); showCouple();">All complexity Table</button>
+				
+				
+				<button type="button" onclick="show(); showInhe();">All complexity Table</button>
+				
+				<button type="button" onclick="show(); showVar();">All complexity Table</button>
+				
+				<button type="button" onclick="show(); showSize();">All complexity Table</button>
+			
+			<script>
+			
+			[...document.querySelectorAll("div.show")].forEach(e=>e.hidden=true);
+			
+			function show() {
+alert("okkkkk");
+				[...document.querySelectorAll("div.show")].forEach(e=>e.hidden=false);
+					
+			}
+			
+			function showAll() {
+				[...document.querySelectorAll("table.all")].forEach(e=>e.hidden=true);
+			}
+			
+			function showControle() {
+				[...document.querySelectorAll("table.control")].forEach(e=>e.hidden=true);
+			}
+			
+			function showCouple() {
+				[...document.querySelectorAll("table.method")].forEach(e=>e.hidden=true);
+			}
+			
+			
+			function showInhe() {
+				[...document.querySelectorAll("table.inheritance")].forEach(e=>e.hidden=true);
+			}
+			
+			
+			function showVar() {
+				[...document.querySelectorAll("table.variable")].forEach(e=>e.hidden=true);
+			}
+			
+			function showSize() {
+				[...document.querySelectorAll("table.size")].forEach(e=>e.hidden=true);
+			}
+			
+			
+			</script>
+			<%
 			//out.println("<hr>");
 			while (i.hasNext()) {
 		FileItem fi = (FileItem) i.next();
@@ -198,6 +253,9 @@ th {
 	</br>
 	<hr>
 	<h1><%=nowfile.getName()%></h1>
+	
+
+	
 	<hr>
 	<%
 		List<String> list = new ArrayList();
@@ -310,7 +368,9 @@ th {
 	// 	for (int x = 0; x < list.size(); x++)
 	// 		regexString += list.get(x) + "\n";
 	%>
-	<h1>Size complexity</h1>
+	
+	<div class="size" hidden>
+	
 	<table style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
@@ -332,7 +392,7 @@ th {
 
 			<col style="width: 1%;">
 		</colgroup>
-
+<h1>Size complexity</h1>
 
 
 		<!-- Put <thead>, <tbody>, and <tr>'s here! -->
@@ -561,8 +621,8 @@ th {
 
 	//variable complexity taaaaaaaaaaaaaaaabellllllllll starteeeeeeeeeeeeeeeeeeeedddddddddddddddddddddddddddddddddddddddddd
 	%>
-	<h1>Variable complexity</h1>
-	<table style="width: 100%">
+	
+	<table class="variable" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
@@ -574,7 +634,7 @@ th {
 
 		</colgroup>
 
-
+<h1 class="variable">Variable complexity</h1>
 
 		<!-- 		Wvs Npdtv Ncdtv Cv  -->
 
@@ -679,11 +739,9 @@ th {
 	<br>
 	<br>
 
-	<h1>complexity of a program due to methods</h1>
-	<hr>
-	<br>
+	
 
-	<table style="width: 100%">
+	<table class="method" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
@@ -706,7 +764,8 @@ th {
 		</colgroup>
 
 
-
+<h1 class="method" >complexity of a program due to methods</h1>
+	
 		<!-- 
 		
 		Wmrt Npdtp Ncdtp Cm 
@@ -794,7 +853,7 @@ th {
 
 
 
-	<table style="width: 100%">
+	<table class="couple" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
@@ -1047,8 +1106,7 @@ th {
 	</table>
 
 
-	<h1>complexity of a program due to control structures</h1>
-	<table style="width: 100%">
+		<table class="control" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
@@ -1061,6 +1119,7 @@ th {
 		</colgroup>
 
 
+<h1>complexity of a program due to control structures</h1>
 
 		<!-- 		Wtcs NC Ccspps Ccs   -->
 
@@ -1173,8 +1232,7 @@ th {
 	<br>
 	<br>
 
-	<h1>complexity of a program due to Inheritance</h1>
-	<table style="width: 100%">
+	<table class="inheritance" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
@@ -1190,7 +1248,8 @@ th {
 
 		</colgroup>
 
-
+<h1>complexity of a program due to Inheritance</h1>
+	
 
 		<!-- 	Cs Cv Cm Ci Ccp Ccs TCps    -->
 
@@ -1319,7 +1378,7 @@ th {
 				<td><%=originalCodeLine.substring(0, originalCodeLine.indexOf("#"))%></td>
 				<td><%=originalCodeLine.substring(originalCodeLine.indexOf("#") + 1)%></td>
 				<%
-					table4.put(number, classScore);
+					table4.put(number, ci);
 				%>
 
 				<td><%=number%></td>
@@ -1348,8 +1407,7 @@ th {
 
 
 
-	<h1>complexity of a program due to all the factors</h1>
-	<table style="width: 100%">
+		<table class="all" style="width: 100%">
 		<colgroup>
 			<col style="width: 1%;">
 			<col style="width: 48%;">
@@ -1365,6 +1423,7 @@ th {
 
 		</colgroup>
 
+<h1 class="all">complexity of a program due to all the factors</h1>
 
 
 		<!-- 	Cs Cv Cm Ci Ccp Ccs TCps    -->
@@ -1453,7 +1512,7 @@ th {
 	</table>
 	<br>
 	<br>
-
+</div>
 	<%
 		}
 
