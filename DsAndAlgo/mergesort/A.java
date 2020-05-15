@@ -1,4 +1,9 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -83,6 +88,13 @@ class A {
         int []arrayToSort=new int[]{4,3,2,1,-12,13};
         sort(arrayToSort);
 
-        System.out.println(Arrays.stream(arrayToSort).boxed().collect(Collectors.toList()));
+     
+
+     
+       Matcher m= Pattern.compile("(\\w)(\\1)*").matcher("aaabbcccdeeef");
+       ArrayList<String> firstNonrepeat=new ArrayList();
+       while (m.find())if(m.group().toString().length()==1)firstNonrepeat.add(m.group());
+
+       System.out.println(firstNonrepeat.get(0));
     }
 }
