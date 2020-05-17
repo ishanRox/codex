@@ -128,6 +128,24 @@ class StreamShortNote {
     // get List
     List varList = "ishannnnnnnnn".chars().distinct().mapToObj(e -> (char) e).collect(Collectors.toList());
     System.out.println(varList);
+
+    ////////////////////////////////////////////
+
+    Integer array[] = { 4, 3, 2, 1, 12 };
+    Arrays.asList(array).forEach(System.out::println);
+
+    int array1[] = { 4, 3, 2, 1 };
+    Arrays.asList(array1).forEach(System.out::println);
+
+    // use Stream.of or Arrays.stream
+    Stream.of(array).forEach(System.out::println);
+    Arrays.stream(array).forEach(System.out::println);
+    // The signature of asList is List<T> asList(T...).
+    // A primitive can't replace a generic type parameter.
+    // Therefore, when you pass to this method an int[],
+    // the entire int[] array replaces T and you get a List<int[]>.
+    // On the other hand, when you pass an Integer[] to that method,
+    // Integer replaces T and you get a List<Integer>.
   }
 }
 

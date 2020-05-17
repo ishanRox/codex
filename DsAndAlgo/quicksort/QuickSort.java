@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class QuickSort {
 
     public static void main(String[] args) {
-        System.out.println("QuickSort Initiated");
+        System.out.println("QuickSort InitiatedI");
 
         int array[] = { 4, 3, 2, 1, 123 };
         QuickSort(array, 0, array.length - 1);
@@ -45,8 +45,8 @@ public class QuickSort {
             }
         }
 
-        swap(pIndex, end, array);
-
+        array[end] = array[pIndex];
+        array[pIndex] = pivotValue;
         return pIndex;
     }
 }
