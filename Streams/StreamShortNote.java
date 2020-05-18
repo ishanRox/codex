@@ -137,15 +137,28 @@ class StreamShortNote {
     int array1[] = { 4, 3, 2, 1 };
     Arrays.asList(array1).forEach(System.out::println);
 
-    // use Stream.of or Arrays.stream
-    Stream.of(array).forEach(System.out::println);
-    Arrays.stream(array).forEach(System.out::println);
+    
     // The signature of asList is List<T> asList(T...).
     // A primitive can't replace a generic type parameter.
     // Therefore, when you pass to this method an int[],
     // the entire int[] array replaces T and you get a List<int[]>.
     // On the other hand, when you pass an Integer[] to that method,
     // Integer replaces T and you get a List<Integer>.
+
+    // use Stream.of or Arrays.stream
+    //but Stream of dosent convert primitive types
+    Stream.of(array).forEach(System.out::println);
+    //But Arrays.stream return int stream
+    Arrays.stream(array).forEach(System.out::println);
+  
+    // Different return types:
+
+    // For primitives arrays (like int[], long[] etc),
+    //  Arrays.stream() and Stream.of() have different return types.
+    // Example: Passing an integer array, the Stream.of()
+    //  method returns Stream whereas Arrays.stream() returns an IntStream.
+  
+  
   }
 }
 
