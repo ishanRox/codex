@@ -158,6 +158,11 @@ class StreamShortNote {
     // Example: Passing an integer array, the Stream.of()
     //  method returns Stream whereas Arrays.stream() returns an IntStream.
   
+   //Make a List with streams
+   //int array[] = IntStream.range(1, 11).toArray();
+
+   // convert to Integer list and showed
+   System.out.println("Before " + Arrays.stream(array).boxed().collect(Collectors.toList()));
   
   }
 }
