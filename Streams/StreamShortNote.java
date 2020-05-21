@@ -164,6 +164,10 @@ class StreamShortNote {
    // convert to Integer list and showed
    System.out.println("Before " + Arrays.stream(array).boxed().collect(Collectors.toList()));
   
+   //Convert intStream to normal same thing second is shorter way
+   Arrays.stream(new int[]{0,1,2,3,4,5,6,7,8,9,}).map(e->e+65).mapToObj(e->((Integer)e).toString()).map(e->(char)Integer.parseInt(e)).forEach(System.out::println)
+   Arrays.stream(new int[]{0,1,2,3,4,5,6,7,8,9,}).map(e->e+65).mapToObj(e->((Integer)e).toString()).map(e->(char)Integer.parseInt(e)).forEach(System.out::println)
+
   }
 }
 
