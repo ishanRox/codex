@@ -6,10 +6,10 @@ public class Singeleton {
 
     public static void main(String[] args) {
 
-        SingleObject singleObject = SingleObject.getSingleObject();
+        SingleObject singleObject = SingeletonAdvance.getSingleObject();
         singleObject.showMessage();
 
-        SingleObject singleObject1 = SingleObject.getSingleObject();
+        SingleObject singleObject1 = SingeletonAdvance.getSingleObject();
         singleObject.showMessage();
     }
 }
@@ -36,19 +36,22 @@ class SingeletonAdvance {
         // And the get into synchronized block block is used because we can get
         // performance hit
         // if we synchronized the method.
-        // then lock is taken by first thread and go inside and see instance is still
+        // then lock is taken by first thread and go inside and meet if() and see instance is still
         // null
         // and make the object.
+        //while 1 st thread making the object 2nd thread come and chek instance is null so yes
+        //then 2nd thread try to enter synchronized block but it cant enter because clas lock has been tacken
+        //meantime 1st object make the instance and assign it to instance 
+        //then 2nd thread comes inside and meet if() and see 1st thread has make the instance 
+        //so it wont enter if and make new object it leaves
 
         if (instance == null) {
 
             // only one lock per class so lock is needed for thread to enter
             synchronized (Singeleton.class) {
                 if (instance == null) {
-
                     instance = new SingeletonAdvance();
                 }
-
             }
             instance = new SingeletonAdvance();
         }
@@ -56,6 +59,10 @@ class SingeletonAdvance {
         return instance;
     }
 
+    // to show same instance is used
+    public void showMessage() {
+        System.out.println("Instance is " + this.hashCode());
+    }
 }
 
 class SingleObject {
