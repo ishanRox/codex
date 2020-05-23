@@ -168,6 +168,10 @@ class StreamShortNote {
    Arrays.stream(new int[]{0,1,2,3,4,5,6,7,8,9,}).map(e->e+65).mapToObj(e->((Integer)e).toString()).map(e->(char)Integer.parseInt(e)).forEach(System.out::println)
    Arrays.stream(new int[]{0,1,2,3,4,5,6,7,8,9,}).map(e->e+65).mapToObj(e->((Integer)e).toString()).map(e->(char)Integer.parseInt(e)).forEach(System.out::println)
 
+
+   //Easiest way to get alphabet in .rangeClosed start,end both are inclusive 
+   IntStream.rangeClosed('A','Z').mapToObj(e->(char)e).toArray();
+
   }
 }
 
