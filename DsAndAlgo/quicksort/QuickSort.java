@@ -12,8 +12,9 @@ public class QuickSort {
     public static void main(String[] args) {
         System.out.println("QuickSort InitiatedI");
 
-        int array[] = { 4, 3, 2, 1, 123 };
-        QuickSort(array, 0, array.length - 1);
+        int array[] = { 4, 8, 3, 5 };
+        // QuickSort(array, 0, array.length - 1);
+        partition(array, 0, array.length - 1);
         Arrays.stream(array).forEach(System.out::println);
     }
 
@@ -40,7 +41,7 @@ public class QuickSort {
 
         for (int i = start; i < end; i++) {
             if (array[i] < pivotValue) {
-                swap(i, pIndex, array);
+                swap(pIndex, i, array);
                 pIndex++;
             }
         }
