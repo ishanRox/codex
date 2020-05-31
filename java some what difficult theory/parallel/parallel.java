@@ -83,10 +83,10 @@ public class parallel {
         System.out.println();
         System.out.println(ForkJoinPool.commonPool());
 
-        List<Integer> no1 = Arrays.asList(1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
+        List<Integer> no1 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
         System.out.println(" this pc hava " + Runtime.getRuntime().availableProcessors()
-                + " so this is processed in that no of parallel cors");
- 
-no1.parallelStream().map(parallel::transform).forEach(System.out::println);
-            }
+                + " so this is processed in that no of parallel cors 4n 4n (laptop) eke output eka kadenne ekai cors 4 prallel run wenawa");
+
+        no1.parallelStream().map(parallel::transform).forEach(System.out::println);
+    }
 }
