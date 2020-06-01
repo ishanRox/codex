@@ -38,20 +38,21 @@ public class compatible {
 
         cFuture.thenAccept(data -> {
             printIt(data);
-        }).thenRun(()->System.out.println("all done"))
-        .thenRun(()->System.out.println("not really"))
-        .thenRun(()->System.out.println("this keep going"));
+        }).thenRun(() -> System.out.println("all done")).thenRun(() -> System.out.println("not really"))
+                .thenRun(() -> System.out.println("this keep going"));
 
-//Stream                  and     CompletableFuture
-//0,1 or more                     one data or error
-//forEach-Consumer                 thenAccept
-//         accept()                     
-//map- Function
-//     apply()
+        // Stream and CompletableFuture
+        // 0,1 or more ||||one data or error
+        // forEach-Consumer |||| thenAccept
+        // accept()
+        // map- Function |||| thenApply
+        // apply()
 
+        System.out.println();
+        cFuture.thenApply(data -> data + 100).thenApply(e -> e * 10).thenAccept(data->System.out.println(data+" the 2 times modified data"););
         System.out.println("in main");
         // meka danne main wa halt karanna
-         sleep(9000);
+        sleep(9000);
 
         System.out.println("main ended");
     }
