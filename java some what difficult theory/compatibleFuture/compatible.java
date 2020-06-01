@@ -38,11 +38,20 @@ public class compatible {
 
         cFuture.thenAccept(data -> {
             printIt(data);
-        });
+        }).thenRun(()->System.out.println("all done"))
+        .thenRun(()->System.out.println("not really"))
+        .thenRun(()->System.out.println("this keep going"));
+
+//Stream                  and     CompletableFuture
+//0,1 or more                     one data or error
+//forEach-Consumer                 thenAccept
+//         accept()                     
+//map- Function
+//     apply()
 
         System.out.println("in main");
         // meka danne main wa halt karanna
-        sleep(9000);
+         sleep(9000);
 
         System.out.println("main ended");
     }
@@ -64,11 +73,13 @@ public class compatible {
     }
 
     public static Integer compute() {
-      
-      //when we comment sleep  all the work have done when main
-      //requesting data.
-      //**********************simply when we requesting data  if completable future thresds work still not completed
-      //it runs on forkjoin thread if its completed its handed overto  calling thread**********************
+
+        // when we comment sleep all the work have done when main
+        // requesting data.
+        // **********************simply when we requesting data if completable future
+        // thresds work still not completed
+        // it runs on forkjoin thread if its completed its handed overto calling
+        // thread**********************
         sleep(5000);
         System.out.println("compute method -" + Thread.currentThread());
 
