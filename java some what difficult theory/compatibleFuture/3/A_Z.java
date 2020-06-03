@@ -1,5 +1,8 @@
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * A_Z
@@ -122,12 +125,70 @@ public class A_Z {
                 .thenCompose(user -> getCreditRating(user).thenCompose(credit -> getAnotherDetail(credit)));
         finalOf3Nested.thenAccept(finalString -> System.out.println(finalString));
         System.out.println();
+        // _____________________________________________________________________________________________________________________________________________________________
+
+        // While thenCompose() is used to combine two Futures where one future is
+        // dependent on the other, thenCombine() is used when you want two Futures to
+        // run independently and do something after both are complete.
+        // Dont care about order they finish but all of them needed to finish for result
+        // these type of instances we use thenCombine.
+        System.out.println("Retrieving weight.");
+        CompletableFuture<Double> weightInKgFuture = CompletableFuture.supplyAsync(() -> 65.0);
+
+        System.out.println("Retrieving height.");
+        CompletableFuture<Double> heightInCmFuture = CompletableFuture.supplyAsync(() -> 177.8);
+
+        System.out.println("Calculating BMI.");
+        CompletableFuture<Double> combinedFuture = weightInKgFuture.thenCombine(heightInCmFuture,
+                (weightInKg, heightInCm) -> {
+                    Double heightInMeter = heightInCm / 100;
+                    return weightInKg / (heightInMeter * heightInMeter);
+                });
+
+        combinedFuture.thenAccept(data -> System.out.println(data + " is your Bmi"));
+        System.out.println();
+        // ___________________________________________________________________________________________________________________
+        // download data from 100 users and do something ata the end incident
+
+        // completableFuture allOf many async requests
+
+        List<String> webPageLinks = IntStream.range('a', 'z').mapToObj(e -> ((char) e) + "")
+                .collect(Collectors.toList());
+
+        // A list of 100 web page links
+
+        // Download contents of all the web pages asynchronously
+        List<CompletableFuture<String>> pageContentFutures = webPageLinks.stream()
+                .map(webPageLink -> downloadWebPage(webPageLink)).collect(Collectors.toList());
+
+        // Create a combined Future using allOf()
+        CompletableFuture<Void> allFutures = CompletableFuture
+                .allOf(pageContentFutures.toArray(new CompletableFuture[pageContentFutures.size()]));
+
+        // When all the Futures are completed, call `future.join()` to get their results
+        // and collect the results in a list -
+        CompletableFuture<List<String>> allPageContentsFuture = allFutures.thenApply(v -> {
+            return pageContentFutures.stream().map(pageContentFuture -> pageContentFuture.join())
+                    .collect(Collectors.toList());
+        });
+        allPageContentsFuture.thenAccept(data -> System.out.println(data));
+        // _____________________________________________________________________________________________________________________________________
+       
+       
         try {
             TimeUnit.SECONDS.sleep(12);
         } catch (InterruptedException e) {
             throw new IllegalStateException(e);
         }
         System.out.println("mainend");
+    }
+
+    // send async request to web here we simiulate it
+    static CompletableFuture<String> downloadWebPage(final String pageLink) {
+        return CompletableFuture.supplyAsync(() -> {
+            // Code to download and return the web page's content
+            return pageLink + " " + Math.random();
+        });
     }
 
     // combining 2 completable Futures
