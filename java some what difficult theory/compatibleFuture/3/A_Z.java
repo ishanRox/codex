@@ -150,7 +150,7 @@ public class A_Z {
         // ___________________________________________________________________________________________________________________
         // download data from 100 users and do something ata the end incident
 
-        // completableFuture allOf many async requests
+        // completableFuture send   many async requests and get response
 
         List<String> webPageLinks = IntStream.range('a', 'z').mapToObj(e -> ((char) e) + "")
                 .collect(Collectors.toList());
