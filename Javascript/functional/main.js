@@ -65,11 +65,13 @@ const video = {
     console.log(this);
   },
 };
-
+console.log("_______________1");
 video.play();
 
 //although we define this outside its also a function inside object
 video.stop = function () {
+
+console.log("_______________2");
   console.log(this);
 };
 //little lambda problem here video.stop=()=> {console.log(this);};
