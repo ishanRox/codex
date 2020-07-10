@@ -1,0 +1,19 @@
+.error{
+    border-style: solid;
+    border-color: #cc0000;
+    outline: none;
+}
+
+.chat_box{
+    border-style: solid;
+    border-color: #ff33cc;
+    height: 550px;
+    width:250px;
+    position: absolute;
+    font-size: 14px;
+    margin-left: 500px;
+   padding-left:10px;
+    overflow-y: scroll;
+    
+}
+

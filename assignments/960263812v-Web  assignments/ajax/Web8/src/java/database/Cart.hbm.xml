@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 4, 2019 8:49:21 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="database.Cart" table="cart" catalog="webcart">
+        <id name="idcart" type="java.lang.Integer">
+            <column name="idcart" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="product" class="database.Product" fetch="select">
+            <column name="product_idproduct" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="database.Customer" fetch="select">
+            <column name="customer_idcustomer" not-null="true" />
+        </many-to-one>
+        <property name="qty" type="java.lang.Integer">
+            <column name="qty" />
+        </property>
+    </class>
+</hibernate-mapping>
