@@ -68,7 +68,7 @@ const video = {
 console.log("_______________1");
 video.play();
 
-//although we define this outside its also a function inside object
+//although we define this outside its also a function inside object-this resolved by who calling the function
 video.stop = function () {
 
 console.log("_______________2");
