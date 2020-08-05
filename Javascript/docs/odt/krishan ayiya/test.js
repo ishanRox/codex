@@ -79,10 +79,93 @@ class Manager extends Employee {
         super(name);
         this.section = section;
     }
-    banner = () => console.log(this.name + 'is and emplyee an manager of ' + this.section);
+    banner = () => console.log(this.name + ' is and emplyee an manager of ' + this.section);
 }
 
 const e1 = new Employee("brian");
 const e2 = new Manager("chriss", "Qa");
 
-e1.banner(); 
+
+//arrow  funcitons wala lexicaly kiwwata meka kohomada une 
+//methana this eka global(module.exports) ekane ?
+//na meke podi wadak wenawa api declare karana arrow function eka constructor eka assata dagannawa
+// class Picture {
+//   draw = () => {
+//     console.log('drawing')
+//   }
+// }
+
+// class Picture {
+//   constructor() {
+//     this.draw = () => {
+//       console.log('drawing');
+//     };
+//   }
+// }
+
+//so constructor ekedi this kiyanne ape object ekama thama habai price eka thama slow meka
+//https://stackoverflow.com/questions/50325925/using-es6-arrow-functions-inside-class
+//https://stackoverflow.com/questions/48920135/es6-functions-arrow-functions-and-this-in-an-es6-class
+//https://medium.com/@charpeni/arrow-functions-in-class-properties-might-not-be-as-great-as-we-think-3b3551c440b1
+
+e1.banner();
+e2.banner();
+e2.banner = () => console.log(' this is overridden');
+e2.banner();
+
+console.log(seperator);
+
+//destruct types https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+//1 way
+
+//const PI = Math.PI;
+//const SQRT2 = Math.SQRT2;
+//we need to give exact name in here
+const { PI, SQRT2 } = Math;
+console.log(`pi ${PI} square root ${SQRT2}`);
+
+// 2nd way
+
+const square = {
+    base: 12.2,
+    id: 'main'
+};
+
+//we can exract the desired one from object in functions
+const area = ({ base }) => base * base;
+
+console.log(area(square));
+
+//3 rd way
+
+const area2 = ({ base }, { round = 3 } = {}) => (base * base).toFixed(round);
+
+console.log(area2(square));
+console.log(area2(square, { round: 5 }));
+//if youre confuse about this to fixed it takes {} and return 12
+//console.log(12.33333.toFixed({}));
+
+//4 rth way
+console.log(seperator);
+const fs = require('fs');
+fs.writeFile('ishan.txt', 'hello js', error => {
+    if (error)
+        throw error;
+    console.log('saved');
+});
+//easy way using destruct
+const { writeFile } = require('fs');
+writeFile('ishaneasy.txt', 'hellooo\n'.repeat(122), e => {
+    if (e) throw e;
+    console.log('saved easily');
+});
+
+//array destructure
+
+console.log(seperator);
+
+const [jan, feb, mar, , may] = [10, 20, 30, 40, 50];
+console.log(`jan ${jan}`);
+console.log(`may ${may}`);
+
