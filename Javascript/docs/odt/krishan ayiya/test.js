@@ -29,11 +29,11 @@ console.log(seperator);
 
 //you can assign outer value directly and you can add dynamic properties
 
-let name = "ishan";
+let nameIsh = "ishan";
 //and we can set a name dynamically to a value which we dont know surely
 let manyNames = ["friend", "girlfriend", "crush"];
 const ishan = {
-    name,
+    nameIsh,
     age: 23,
     [manyNames[Math.floor(manyNames.length * Math.random())]]: "**ni"
 };
@@ -163,9 +163,34 @@ writeFile('ishaneasy.txt', 'hellooo\n'.repeat(122), e => {
 
 //array destructure
 
-console.log(seperator);
 
 const [jan, feb, mar, , may] = [10, 20, 30, 40, 50];
 console.log(`jan ${jan}`);
 console.log(`may ${may}`);
 
+//rest operator
+const [month, ...otherMonths] = [1, 2, 3, 4, 5];
+console.log(month);
+console.log(otherMonths);
+
+//you can copy array into other array using spread operator
+let newArray = [...otherMonths];
+console.log(`new array ${newArray}`);
+console.log(`you can merge arrays ${[...otherMonths, month]}`);
+
+console.log(seperator);
+
+
+const complexObject = {
+    name: 'ishan',
+    age: 34,
+    sex: 'male',
+    job: 'thama sutine',
+    car: 'mazda'
+};
+//rest element must be the last element
+const { name, ...simpleObject } = complexObject;
+console.log(complexObject);
+console.log(name);
+console.log(simpleObject);
+console.log(seperator);
