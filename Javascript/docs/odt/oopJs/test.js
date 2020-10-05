@@ -197,3 +197,7 @@ console.log(alan);
 console.log(Object.getPrototypeOf(alan));
 console.log(Object.getPrototypeOf(Object.getPrototypeOf(alan)));
 //https://www.hackerrank.com/challenges/js10-inheritance/topics
+
+
+
+//https://medium.com/javascript-scene/javascript-factory-functions-vs-constructor-functions-vs-classes-2f22ceddf33e
