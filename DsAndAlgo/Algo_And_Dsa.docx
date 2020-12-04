@@ -1,0 +1,31 @@
+﻿Algorithems
+
+Algorithms have a long history and the word can be traced back to the 9th century. At this time the Persian scientist, astronomer and mathematician Abdullah Muhammad bin Musa al-Khwarizmi, often cited as “The father of Algebra”, was indirect responsible for the creation of the term “Algorithm”.
+
+We going to learn about sorting algorithems and  time complexity and many more topics.
+ 
+
+Time complexity
+
+Time complexity why should we care ?
+
+Imagine ram and sham got a problem from mr computer to calculate weather a number is prime or not .Prime numbers are numbers that have only 2 factors: 1 and themselves. 
+
+So ram got a loop running from (2 to n-1)
+
+Sham got a loop from (2 to √n)
+*how this happen – think like this if we check 8 is prime or not we dont have to check no more than half of it like 6,7 for sure cant divide 8 without remainders.
+.
+
+There was no difference between both until n got bigger and bigger lets see what happen By a picture.
+
+
+
+
+
+
+
+
+
+Here n is value in last value ram takes 115 days and sham takes only 1.66 minutes
+in computer science solutions like in ram denoted by O(n) because Time propotional to n.And in sham like solutions Time propotional to √n it O(√n).
