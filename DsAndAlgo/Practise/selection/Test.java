@@ -1,14 +1,20 @@
+
 class Test {
     public static void main(String[] args) {
         int array[] = { 4, 3, 2, 1 };
 
-        // selectionSort(array);
+         selectionSort(array);
         // bubbleSort(array);
         // insertionSort(array);
-        mergeSort(array);
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
+        // mergeSort(array);
+        
+        for (int x : array) {
+            // syso
+            System.out.println(x);
         }
+        // for (int i = 0; i < array.length; i++) {
+        // System.out.println(array[i]);
+        // }
     }
 
     public static void swap(int array[], int a, int b) {
@@ -38,7 +44,19 @@ class Test {
 
                 }
             }
-            swap(array, i, min);
+
+            // in stable selection sort we dont swap we just
+            // place the min value in temp variable and shift others one by one so
+            // stablility saved
+            // 4a 2 4b 1 ,1 4a 2 4b, 1 2 4a 4b
+            int temp = array[min];
+            while (min > i) {
+                array[min] = array[min - 1];
+                min--;
+            }
+
+            // swap(array, i, min);
+            array[i] = temp;
         }
     }
 
