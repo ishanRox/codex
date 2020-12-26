@@ -1,137 +1,77 @@
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-class DS {
+/**
+ * DS
+ */
+public class DS {
+
     public static void main(String[] args) {
-        int array[] = { 4, 3, 2, 1 };
-        // selectionSort(array);
-        // bubbleSort(array);
-        // insertionSort(array);
-        // mergeSort(array);
-        quickSort(array, 0, array.length - 1);
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
-        }
+        int factor1[] = { 10 };
+        Stream<Integer> noStream1 = Arrays.asList(5, 4, 3, 2, 1).stream().map(e -> e * factor1[0]);
+       
+
+        noStream1.forEach(System.out::println);
+        factor1[0] = 1000;       factor1[0] = 122000;
     }
+}
 
-    public static void swap(int array[], int a, int b) {
-        int temp = array[a];
-        array[a] = array[b];
-        array[b] = temp;
-    }
+class LinkedList {
+    Node head;
 
-    public static void insertionSort(int array[]) {
-        for (int i = 1; i < array.length; i++) {
-            int holeIndex = i;
-            int holeValue = array[i];
+    public void delete(int data) {
+        Node temp = head;
+        while (temp != null) {
+            if (data == temp.next.data) {
 
-            while (holeIndex > 0 && array[holeIndex - 1] > holeValue) {
 
-                array[holeIndex] = array[holeIndex - 1];
-                holeIndex--;
             }
-            array[holeIndex] = holeValue;
+            temp = temp.next;
         }
     }
 
-    public static void bubbleSort(int array[]) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length - 1 - i; j++) {
-                if (array[j] > array[j + 1]) {
-                    swap(array, j, j + 1);
-                }
-            }
-        }
-    }
+    public void append(int data) {
+        Node newNode = new Node(data);
 
-    public static void selectionSort(int array[]) {
-        for (int i = 0; i < array.length; i++) {
-            int min = i;
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[min] > array[j]) {
-                    min = j;
-                }
-            }
-            swap(array, min, i);
-        }
-    }
-
-    public static void mergeSort(int array[]) {
-        if (array.length < 2) {
+        if (head == null) {
+            head = newNode;
             return;
         }
-        int mid = array.length / 2;
-        int left[] = new int[mid];
-        int right[] = new int[array.length - mid];
 
-        for (int i = 0; i < mid; i++) {
-            left[i] = array[i];
+        Node lastNode = head;
+        while (lastNode.next != null) {
+            lastNode = lastNode.next;
         }
-        for (int i = mid; i < array.length; i++) {
-            right[i - mid] = array[i];
-        }
-        mergeSort(left);
-        mergeSort(right);
-        merge(array, left, right);
-
+        lastNode.next = newNode;
     }
 
-    public static void merge(int array[], int left[], int right[]) {
-        int mainIndex = 0, leftIndex = 0, rightIndex = 0;
-
-        while (leftIndex < left.length && rightIndex < right.length) {
-
-            if (left[leftIndex] <= right[rightIndex]) {
-                array[mainIndex] = left[leftIndex];
-                leftIndex++;
-            } else {
-                array[mainIndex] = right[rightIndex];
-                rightIndex++;
-            }
-            mainIndex++;
-        }
-
-        while (leftIndex < left.length) {
-
-            array[mainIndex] = left[leftIndex];
-            leftIndex++;
-            mainIndex++;
-        }
-
-        while (rightIndex < right.length) {
-
-            array[mainIndex] = right[rightIndex];
-            rightIndex++;
-            mainIndex++;
-        }
-
+    public void push(int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
     }
 
-    public static void quickSort(int array[], int start, int end) {
-        if (start < end) {
-            System.out.println(start+" start end "+end);
-            int partitionIndex = partition(array, start, end);
-            quickSort(array, start, partitionIndex - 1);
-            quickSort(array, partitionIndex + 1, end);
+    public void insertAfter(Node previouse, int data) {
+        Node newNode = new Node(data);
+        newNode.next = previouse.next;
+        previouse.next = newNode;
+    }
 
+    public void print() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.println(temp.data);
+            temp = temp.next;
         }
     }
 
-    public static int partition(int array[], int start, int end) {
-        int pivot = array[end];
-        int partitionIndex = start;
+    class Node {
+        int data;
+        Node next;
 
-        for (int i = start; i < end; i++) {
-            System.out.println(i);
-            if (array[i] <= pivot) {
-                swap(array, i, partitionIndex);
-                partitionIndex++;
-            }
+        public Node(int data) {
+            this.data = data;
+            next = null;
         }
-        System.out.println(partitionIndex + " parrr");
-        System.out.println(Arrays.stream(array).boxed().collect(Collectors.toList()));
-
-        swap(array, partitionIndex, end);
-        return partitionIndex;
     }
 }
